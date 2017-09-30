@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
-import vo.Producto;
+import vo.OrdenRestaurante;
 
 
-@Path("productos")
-public class RESTProducto 
+@Path("ordenRestaurantes")
+public class RESTOrdenRestaurante 
 {
 	@Context
 	private ServletContext context;
@@ -37,26 +37,26 @@ public class RESTProducto
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearProducto(Producto producto) {
+	public Response crearOrdenRestaurante(OrdenRestaurante ordenRestaurante) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.crearProducto(producto);
+			tm.crearOrdenRestaurante(ordenRestaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(ordenRestaurante).build();
 	}
 		
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoId( @PathParam( "id" ) Long id )
+	public Response darOrdenRestauranteId( @PathParam( "id" ) Long id )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Producto producto = tm.darProductoPorId(id);
-			return Response.status( 200 ).entity( producto ).build( );			
+			OrdenRestaurante ordenRestaurante = tm.darOrdenRestaurantePorId(id);
+			return Response.status( 200 ).entity( ordenRestaurante ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -65,15 +65,15 @@ public class RESTProducto
 	}
 	
 	@GET
-	@Path( "{nombre}" )
+	@Path( "{idMenu: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoNombre( @PathParam( "nombre" ) String nombre )
+	public Response darOrdenRestauranteNombre( @PathParam( "idMenu" ) Long idMenu )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			ArrayList<Producto> productos = tm.darProductosPorNombre(nombre);
-			return Response.status( 200 ).entity( productos ).build( );			
+			ArrayList<OrdenRestaurante> ordenRestaurantes = tm.darOrdenRestaurantePorMenu(idMenu);
+			return Response.status( 200 ).entity( ordenRestaurantes ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -83,41 +83,41 @@ public class RESTProducto
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response darProductos() {
+	public Response darOrdenRestaurantes() {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
-		List<Producto> productos;
+		List<OrdenRestaurante> ordenRestaurantes;
 		try {
-			productos = tm.darProductos();
+			ordenRestaurantes = tm.darOrdenRestaurantes();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(productos).build();
+		return Response.status(200).entity(ordenRestaurantes).build();
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response actualizarProducto(Producto producto) {
+	public Response actualizarOrdenRestaurante(OrdenRestaurante ordenRestaurante) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.actualizarProducto(producto);
+			tm.actualizarOrdenRestaurante(ordenRestaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(ordenRestaurante).build();
 	}
 	
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response eliminarProducto(Producto producto) {
+	public Response eliminarOrdenRestaurante(OrdenRestaurante ordenRestaurante) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.eliminarProducto(producto);
+			tm.eliminarOrdenRestaurante(ordenRestaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(ordenRestaurante).build();
 	}
 	
 }

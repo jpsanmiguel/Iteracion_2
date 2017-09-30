@@ -20,12 +20,21 @@ public class DAOTablaIngredienteProducto
 		String sql = "INSERT INTO INGREDIENTE_PRODUCTO VALUES (?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ingredienteProducto.getIdIngrediente());
-			preStat.setLong(1, ingredienteProducto.getIdProducto());
+			preStat.setLong(1, ingredienteProducto.getIdIngrediente());
+			preStat.setLong(2, ingredienteProducto.getIdProducto());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -36,7 +45,7 @@ public class DAOTablaIngredienteProducto
 		String sql = "SELECT * FROM INGREDIENTE_PRODUCTO WHERE ID_INGREDIENTE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, idIngrediente);
+			preStat.setLong(1, idIngrediente);
 			ResultSet rs = preStat.executeQuery();
 
 			while(rs.next())
@@ -45,9 +54,18 @@ public class DAOTablaIngredienteProducto
 				Long idProducto = rs.getLong("ID_PRODUCTO");
 				ingredientesProductos.add(new IngredienteProducto(idIngrediente1, idProducto));
 			}				
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ingredientesProductos;
@@ -59,7 +77,7 @@ public class DAOTablaIngredienteProducto
 		String sql = "SELECT * FROM INGREDIENTE_PRODUCTO WHERE ID_PRODUCTO = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, idProducto);
+			preStat.setLong(1, idProducto);
 			ResultSet rs = preStat.executeQuery();
 
 			while(rs.next())
@@ -68,9 +86,18 @@ public class DAOTablaIngredienteProducto
 				Long idProducto1 = rs.getLong("ID_PRODUCTO");
 				ingredientesProductos.add(new IngredienteProducto(idIngrediente, idProducto1));
 			}				
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ingredientesProductos;
@@ -90,9 +117,18 @@ public class DAOTablaIngredienteProducto
 				Long idProducto = rs.getLong("ID_PRODUCTO");
 				ingredientesProductos.add(new IngredienteProducto(idIngrediente, idProducto));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ingredientesProductos;
@@ -103,12 +139,21 @@ public class DAOTablaIngredienteProducto
 		String sql = "UPDATE INGREDIENTE_PRODUCTO SET ID_INGREDIENTE = ? WHERE ID_PRODUCTO = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ingredienteProducto.getIdIngrediente());
-			preStat.setLong(1, ingredienteProducto.getIdProducto());
+			preStat.setLong(1, ingredienteProducto.getIdIngrediente());
+			preStat.setLong(2, ingredienteProducto.getIdProducto());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -118,12 +163,21 @@ public class DAOTablaIngredienteProducto
 		String sql = "UPDATE INGREDIENTE_PRODUCTO SET ID_PRODUCTO = ? WHERE ID_INGREDIENTE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ingredienteProducto.getIdProducto());
-			preStat.setLong(1, ingredienteProducto.getIdIngrediente());
+			preStat.setLong(1, ingredienteProducto.getIdProducto());
+			preStat.setLong(2, ingredienteProducto.getIdIngrediente());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -133,11 +187,20 @@ public class DAOTablaIngredienteProducto
 		String sql = "DELETE FROM INGREDIENTE_PRODUCTO WHERE ID_PRODUCTO = ? AND ID_INGREDIENTE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ingredienteProducto.getIdProducto());
-			preStat.setLong(1, ingredienteProducto.getIdIngrediente());
+			preStat.setLong(1, ingredienteProducto.getIdProducto());
+			preStat.setLong(2, ingredienteProducto.getIdIngrediente());
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

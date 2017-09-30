@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
-import vo.Producto;
+import vo.Rotonda;
 
 
-@Path("productos")
-public class RESTProducto 
+@Path("rotondas")
+public class RESTRotonda 
 {
 	@Context
 	private ServletContext context;
@@ -37,26 +37,26 @@ public class RESTProducto
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearProducto(Producto producto) {
+	public Response crearRotonda(Rotonda rotonda) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.crearProducto(producto);
+			tm.crearRotonda(rotonda);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(rotonda).build();
 	}
 		
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoId( @PathParam( "id" ) Long id )
+	public Response darRotondaId( @PathParam( "id" ) Long id )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Producto producto = tm.darProductoPorId(id);
-			return Response.status( 200 ).entity( producto ).build( );			
+			Rotonda rotonda = tm.darRotondaPorId(id);
+			return Response.status( 200 ).entity( rotonda ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -67,13 +67,13 @@ public class RESTProducto
 	@GET
 	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoNombre( @PathParam( "nombre" ) String nombre )
+	public Response darRotondaNombre( @PathParam( "nombre" ) String nombre )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			ArrayList<Producto> productos = tm.darProductosPorNombre(nombre);
-			return Response.status( 200 ).entity( productos ).build( );			
+			ArrayList<Rotonda> rotondas = tm.darRotondasPorNombre(nombre);
+			return Response.status( 200 ).entity( rotondas ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -83,41 +83,41 @@ public class RESTProducto
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response darProductos() {
+	public Response darRotondas() {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
-		List<Producto> productos;
+		List<Rotonda> rotondas;
 		try {
-			productos = tm.darProductos();
+			rotondas = tm.darRotondas();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(productos).build();
+		return Response.status(200).entity(rotondas).build();
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response actualizarProducto(Producto producto) {
+	public Response actualizarRotonda(Rotonda rotonda) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.actualizarProducto(producto);
+			tm.actualizarRotonda(rotonda);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(rotonda).build();
 	}
 	
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response eliminarProducto(Producto producto) {
+	public Response eliminarRotonda(Rotonda rotonda) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.eliminarProducto(producto);
+			tm.eliminarRotonda(rotonda);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(rotonda).build();
 	}
 	
 }

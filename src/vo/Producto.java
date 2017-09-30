@@ -1,26 +1,51 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Producto {
 	
+
+	@JsonProperty(value="idProducto")
 	private Long idProducto;
 	
+
+	@JsonProperty(value="nombre")
 	private String nombre;
 	
+
+	@JsonProperty(value="idCategoria")
 	private Long idCategoria;
 	
+
+	@JsonProperty(value="descripcionEsp")
 	private String descripcionEsp;
 	
+
+	@JsonProperty(value="descripcionIng")
 	private String descripcionIng;
 	
+
+	@JsonProperty(value="tiempo")
 	private int tiempo;
 	
+
+	@JsonProperty(value="costo")
 	private double costo;
 	
+
+	@JsonProperty(value="precio")
 	private double precio;
 
 	
 	
-	public Producto(Long idProducto, String nombre, Long idCategoria, String descripcionEsp, String descripcionIng, int tiempo, double costo, double precio) {
+	public Producto(@JsonProperty(value="idProducto")Long idProducto, 
+					@JsonProperty(value="nombre")String nombre, 
+					@JsonProperty(value="idCategoria")Long idCategoria, 
+					@JsonProperty(value="descripcionEsp")String descripcionEsp, 
+					@JsonProperty(value="descripcionIng")String descripcionIng, 
+					@JsonProperty(value="tiempo")int tiempo, 
+					@JsonProperty(value="costo")double costo, 
+					@JsonProperty(value="precio")double precio) {
 		this.idProducto = idProducto;
 		this.nombre = nombre;
 		this.idCategoria = idCategoria;

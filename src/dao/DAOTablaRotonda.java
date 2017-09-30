@@ -20,14 +20,21 @@ public class DAOTablaRotonda
 		String sql = "INSERT INTO ROTONDA VALUES (?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, rotonda.getId());
-			preStat.setString(1, rotonda.getNombre());
+			preStat.setLong(1, rotonda.getId());
+			preStat.setString(2, rotonda.getNombre());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -38,7 +45,7 @@ public class DAOTablaRotonda
 		String sql = "SELECT * FROM ROTONDA WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, id);
+			preStat.setLong(1, id);
 			ResultSet rs = preStat.executeQuery();
 			while(rs.next())
 			{
@@ -50,7 +57,14 @@ public class DAOTablaRotonda
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return rotonda;
@@ -62,7 +76,7 @@ public class DAOTablaRotonda
 		String sql = "SELECT * FROM ROTONDA WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, nombre);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			while(rs.next())
 			{
@@ -74,7 +88,14 @@ public class DAOTablaRotonda
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return rotondas;
@@ -97,7 +118,14 @@ public class DAOTablaRotonda
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return rotondas;
@@ -108,13 +136,21 @@ public class DAOTablaRotonda
 		String sql = "UPDATE ROTONDA SET NOMBRE = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, rotonda.getNombre());
-			preStat.setLong(1, rotonda.getId());
+			preStat.setString(1, rotonda.getNombre());
+			preStat.setLong(2, rotonda.getId());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -124,12 +160,20 @@ public class DAOTablaRotonda
 		String sql = "DELETE FROM ROTONDA WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, rotonda.getId());
+			preStat.setLong(1, rotonda.getId());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

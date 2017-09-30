@@ -20,18 +20,26 @@ public class DAOTablaZona
 		String sql = "INSERT INTO ZONA VALUES (?,?,?,?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, zona.getIdZona());
-			preStat.setString(1, zona.getNombre());
-			preStat.setString(2, darStringBoolean(zona.isEsZonaAbierta()));
-			preStat.setInt(3, zona.getCapacidad());
-			preStat.setString(4, darStringBoolean(zona.isAptoParaTodos()));
-			preStat.setString(5, zona.getCondicionesTecnicas());
-			preStat.setLong(6, zona.getIdRotonda());
+			preStat.setLong(1, zona.getIdZona());
+			preStat.setString(2, zona.getNombre());
+			preStat.setString(3, darStringBoolean(zona.isEsZonaAbierta()));
+			preStat.setInt(4, zona.getCapacidad());
+			preStat.setString(5, darStringBoolean(zona.isAptoParaTodos()));
+			preStat.setString(6, zona.getCondicionesTecnicas());
+			preStat.setLong(7, zona.getIdRotonda());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -42,7 +50,7 @@ public class DAOTablaZona
 		String sql = "SELECT * FROM ZONA WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, id);
+			preStat.setLong(1, id);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -56,9 +64,18 @@ public class DAOTablaZona
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				zona = new Zona(idZona, nombre, esZonaAbierta, capacidad, aptoParaTodos, condicionesTecnicas, idRotonda);
 			}				
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return zona;
@@ -71,7 +88,7 @@ public class DAOTablaZona
 		String sql = "SELECT * FROM ZONA WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, nombre);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -85,9 +102,18 @@ public class DAOTablaZona
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				zonas.add(new Zona(id, nombreZona, esZonaAbierta, capacidad, aptoParaTodos, condicionesTecnicas, idRotonda));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return zonas;
@@ -112,9 +138,18 @@ public class DAOTablaZona
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				zonas.add(new Zona(id, nombreZona, esZonaAbierta, capacidad, aptoParaTodos, condicionesTecnicas, idRotonda));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return zonas;
@@ -125,18 +160,26 @@ public class DAOTablaZona
 		String sql = "UPDATE ZONA SET NOMBRE = ?, ES_ZONA_ABIERTA = ?, CAPACIDAD = ?, APTO_PARA_TODOS = ?, CONDICIONES_TECNICAS = ?, ID_ROTONDA = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, zona.getNombre());
-			preStat.setString(1, darStringBoolean(zona.isEsZonaAbierta()));
-			preStat.setInt(2, zona.getCapacidad());
-			preStat.setString(3, darStringBoolean(zona.isAptoParaTodos()));
-			preStat.setString(4, zona.getCondicionesTecnicas());			
-			preStat.setLong(5, zona.getIdRotonda());
-			preStat.setLong(6, zona.getIdZona());
+			preStat.setString(1, zona.getNombre());
+			preStat.setString(2, darStringBoolean(zona.isEsZonaAbierta()));
+			preStat.setInt(3, zona.getCapacidad());
+			preStat.setString(4, darStringBoolean(zona.isAptoParaTodos()));
+			preStat.setString(5, zona.getCondicionesTecnicas());			
+			preStat.setLong(6, zona.getIdRotonda());
+			preStat.setLong(7, zona.getIdZona());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -146,11 +189,20 @@ public class DAOTablaZona
 		String sql = "DELETE FROM ZONA WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, zona.getIdZona());
+			preStat.setLong(1, zona.getIdZona());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

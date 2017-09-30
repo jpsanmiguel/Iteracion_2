@@ -1,16 +1,25 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Cliente {
 	
+	@JsonProperty(value="cedula")
 	private Long cedula;
 	
+	@JsonProperty(value="nombre")
 	private String nombre;
 	
+	@JsonProperty(value="correo")
 	private String correo;
 	
+	@JsonProperty(value="idRotonda")
 	private Long idRotonda;
 	
-	public Cliente(Long cedula, String nombre, String correo, Long idRotonda)
+	public Cliente(@JsonProperty(value="cedula")Long cedula, 
+				   @JsonProperty(value="nombre")String nombre, 
+				   @JsonProperty(value="correo") String correo, 
+				   @JsonProperty(value="idRotonda")Long idRotonda)
 	{
 		this.cedula = cedula;
 		this.nombre = nombre;

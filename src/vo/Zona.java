@@ -1,25 +1,40 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Zona 
 {
 
+	@JsonProperty(value="idZona")
 	private Long idZona;
 	
+	@JsonProperty(value="nombre")
 	private String nombre;
 	
+	@JsonProperty(value="esZonaAbierta")
 	private boolean esZonaAbierta;
 	
+	@JsonProperty(value="capacidad")
 	private int capacidad;
 	
+	@JsonProperty(value="aptoParaTodos")
 	private boolean aptoParaTodos;
 	
+	@JsonProperty(value="condicionesTecnicas")
 	private String condicionesTecnicas;
 
+	@JsonProperty(value="idRotonda")
 	private Long idRotonda;
 	
 	//TODO completar atributos
 
-	public Zona(Long idZona, String nombre, boolean esZonaAbierta, int capacidad, boolean aptoParaTodos, String condicionesTecnicas, Long idRotonda) {
+	public Zona(@JsonProperty(value="idZona")Long idZona, 
+				@JsonProperty(value="nombre")String nombre, 
+				@JsonProperty(value="esZonaAbierta")boolean esZonaAbierta, 
+				@JsonProperty(value="capacidad")int capacidad, 
+				@JsonProperty(value="aptoParaTodos")boolean aptoParaTodos, 
+				@JsonProperty(value="condicionesTecnicas")String condicionesTecnicas, 
+				@JsonProperty(value="idRotonda")Long idRotonda) {
 		this.idZona = idZona;
 		this.nombre = nombre;
 		this.esZonaAbierta = esZonaAbierta;

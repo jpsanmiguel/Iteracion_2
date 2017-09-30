@@ -2,23 +2,33 @@ package vo;
 
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Reserva 
 {
-	
+	@JsonProperty(value="idReserva")
 	private Long idReserva;
 	
+	@JsonProperty(value="fecha")
 	private Date fecha;
 	
+	@JsonProperty(value="numComensales")
 	private int numComensales;
 	
+	@JsonProperty(value="idCliente")
 	private Long idCliente;
 	
+	@JsonProperty(value="idZona")
 	private Long idZona;
 	
 	//TODO completar atributos
 
 
-	public Reserva(Long idReserva, Date fecha, int numComensales, Long idCliente, Long idZona) {
+	public Reserva(@JsonProperty(value="idReserva")Long idReserva, 
+				   @JsonProperty(value="fecha")Date fecha, 
+				   @JsonProperty(value="numComensales")int numComensales, 
+				   @JsonProperty(value="idCliente")Long idCliente, 
+				   @JsonProperty(value="idZona")Long idZona) {
 		this.idReserva = idReserva;
 		this.fecha = fecha;
 		this.numComensales = numComensales;

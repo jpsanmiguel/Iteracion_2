@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
-import vo.Producto;
+import vo.Reserva;
 
 
-@Path("productos")
-public class RESTProducto 
+@Path("reservas")
+public class RESTReserva 
 {
 	@Context
 	private ServletContext context;
@@ -37,26 +37,26 @@ public class RESTProducto
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearProducto(Producto producto) {
+	public Response crearReserva(Reserva reserva) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.crearProducto(producto);
+			tm.crearReserva(reserva);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(reserva).build();
 	}
 		
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoId( @PathParam( "id" ) Long id )
+	public Response darReservaId( @PathParam( "id" ) Long id )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Producto producto = tm.darProductoPorId(id);
-			return Response.status( 200 ).entity( producto ).build( );			
+			Reserva reserva = tm.darReservaPorId(id);
+			return Response.status( 200 ).entity( reserva ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -65,15 +65,32 @@ public class RESTProducto
 	}
 	
 	@GET
-	@Path( "{nombre}" )
+	@Path( "{idZona: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoNombre( @PathParam( "nombre" ) String nombre )
+	public Response darReservaNombre( @PathParam( "idZona" ) Long idZona )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			ArrayList<Producto> productos = tm.darProductosPorNombre(nombre);
-			return Response.status( 200 ).entity( productos ).build( );			
+			ArrayList<Reserva> reservas = tm.darReservaPorNombre(idZona);
+			return Response.status( 200 ).entity( reservas ).build( );			
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
+	
+	@GET
+	@Path( "{idCliente: \\d+}" )
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response darReservaCorreo( @PathParam( "idCliente" ) Long idCliente )
+	{
+		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
+		try
+		{
+			ArrayList<Reserva> reserva = tm.darReservaPorIdCliente(idCliente);
+			return Response.status( 200 ).entity( reserva ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -83,41 +100,41 @@ public class RESTProducto
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response darProductos() {
+	public Response darReservas() {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
-		List<Producto> productos;
+		List<Reserva> reservas;
 		try {
-			productos = tm.darProductos();
+			reservas = tm.darReservas();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(productos).build();
+		return Response.status(200).entity(reservas).build();
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response actualizarProducto(Producto producto) {
+	public Response actualizarReserva(Reserva reserva) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.actualizarProducto(producto);
+			tm.actualizarReserva(reserva);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(reserva).build();
 	}
 	
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response eliminarProducto(Producto producto) {
+	public Response eliminarReserva(Reserva reserva) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.eliminarProducto(producto);
+			tm.eliminarReserva(reserva);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(reserva).build();
 	}
 	
 }

@@ -20,14 +20,20 @@ public class DAOTablaCategoria {
 		String sql = "INSERT INTO CATEGORIA VALUES (?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, categoria.getId());
-			preStat.setString(1, categoria.getNombre());
+			preStat.setLong(1, categoria.getId());
+			preStat.setString(2, categoria.getNombre());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -38,7 +44,7 @@ public class DAOTablaCategoria {
 		String sql = "SELECT * FROM CATEGORIA WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, id);
+			preStat.setLong(1, id);
 			ResultSet rs = preStat.executeQuery();
 			while(rs.next())
 			{
@@ -50,7 +56,13 @@ public class DAOTablaCategoria {
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return categoria;
@@ -62,7 +74,7 @@ public class DAOTablaCategoria {
 		String sql = "SELECT * FROM CATEGORIA WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, nombre);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			while(rs.next())
 			{
@@ -74,7 +86,13 @@ public class DAOTablaCategoria {
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return categorias;
@@ -97,7 +115,13 @@ public class DAOTablaCategoria {
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return categorias;
@@ -108,28 +132,45 @@ public class DAOTablaCategoria {
 		String sql = "UPDATE CATEGORIA SET NOMBRE = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, categoria.getNombre());
-			preStat.setLong(1, categoria.getId());
+			preStat.setString(1, categoria.getNombre());
+			preStat.setLong(2, categoria.getId());
 			preStat.executeQuery();
+
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarCategoria(Connection conn, Categoria categoria)
 	{
 		String sql = "DELETE FROM CATEGORIA WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, categoria.getId());
+			preStat.setLong(1, categoria.getId());
 			preStat.executeQuery();
+
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar sobre rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

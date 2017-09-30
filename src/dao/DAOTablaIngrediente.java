@@ -20,14 +20,23 @@ public class DAOTablaIngrediente
 		String sql = "INSERT INTO INGREDIENTE VALUES (?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ingrediente.getIdIngrediente());
-			preStat.setString(1, ingrediente.getNombre());
-			preStat.setString(2, ingrediente.getDescripcionEsp());
-			preStat.setString(3, ingrediente.getDescripcionIng());
+			preStat.setLong(1, ingrediente.getIdIngrediente());
+			preStat.setString(2, ingrediente.getNombre());
+			preStat.setString(3, ingrediente.getDescripcionEsp());
+			preStat.setString(4, ingrediente.getDescripcionIng());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -38,7 +47,7 @@ public class DAOTablaIngrediente
 		String sql = "SELECT * FROM INGREDIENTE WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, id);
+			preStat.setLong(1, id);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -49,9 +58,18 @@ public class DAOTablaIngrediente
 				String descripcionIng = rs.getString("DESCRIPCION_ING");
 				ingrediente = new Ingrediente(idIngrediente, nombre, descripcionEsp, descripcionIng);
 			}				
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ingrediente;
@@ -64,7 +82,7 @@ public class DAOTablaIngrediente
 		String sql = "SELECT * FROM INGREDIENTE WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, nombre);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -75,9 +93,18 @@ public class DAOTablaIngrediente
 				String descripcionIng = rs.getString("DESCRIPCION_ING");
 				ingredientes.add(new Ingrediente(id, nombreIngrediente, descripcionEsp, descripcionIng));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ingredientes;
@@ -99,9 +126,18 @@ public class DAOTablaIngrediente
 				String descripcionIng = rs.getString("DESCRIPCION_ING");
 				ingredientes.add(new Ingrediente(id, nombreIngrediente, descripcionEsp, descripcionIng));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ingredientes;
@@ -112,14 +148,23 @@ public class DAOTablaIngrediente
 		String sql = "UPDATE INGREDIENTE SET NOMBRE = ?, DESCRIPCION_ESP = ?, DESCRIPCION_ING = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, ingrediente.getNombre());
-			preStat.setString(1, ingrediente.getDescripcionEsp());
-			preStat.setString(2, ingrediente.getDescripcionIng());
-			preStat.setLong(3, ingrediente.getIdIngrediente());
+			preStat.setString(1, ingrediente.getNombre());
+			preStat.setString(2, ingrediente.getDescripcionEsp());
+			preStat.setString(3, ingrediente.getDescripcionIng());
+			preStat.setLong(4, ingrediente.getIdIngrediente());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -129,11 +174,20 @@ public class DAOTablaIngrediente
 		String sql = "DELETE FROM INGREDIENTE WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ingrediente.getIdIngrediente());
+			preStat.setLong(1, ingrediente.getIdIngrediente());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

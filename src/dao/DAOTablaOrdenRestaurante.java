@@ -21,14 +21,23 @@ public class DAOTablaOrdenRestaurante
 		String sql = "INSERT INTO ORDEN_RESTAURANTE VALUES (?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ordenRestaurante.getIdOrdenRestaurante());
-			preStat.setDate(1, ordenRestaurante.getFecha());
-			preStat.setLong(2, ordenRestaurante.getIdMenu());
-			preStat.setLong(3, ordenRestaurante.getIdRotonda());
+			preStat.setLong(1, ordenRestaurante.getIdOrdenRestaurante());
+			preStat.setDate(2, ordenRestaurante.getFecha());
+			preStat.setLong(3, ordenRestaurante.getIdMenu());
+			preStat.setLong(4, ordenRestaurante.getIdRotonda());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -39,7 +48,7 @@ public class DAOTablaOrdenRestaurante
 		String sql = "SELECT * FROM ORDEN_RESTAURANTE WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, id);
+			preStat.setLong(1, id);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -50,9 +59,18 @@ public class DAOTablaOrdenRestaurante
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				ordenRestaurante = new OrdenRestaurante(idOrdenRestaurante, fecha, idMenu, idRotonda);
 			}				
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ordenRestaurante;
@@ -65,7 +83,7 @@ public class DAOTablaOrdenRestaurante
 		String sql = "SELECT * FROM ORDEN_RESTAURANTE WHERE ID_RESTAURANTE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, idMenu);
+			preStat.setLong(1, idMenu);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -76,9 +94,18 @@ public class DAOTablaOrdenRestaurante
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				ordenRestaurantes.add(new OrdenRestaurante(id, fecha, idMenu1, idRotonda));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ordenRestaurantes;
@@ -100,9 +127,18 @@ public class DAOTablaOrdenRestaurante
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				ordenRestaurantes.add(new OrdenRestaurante(id, fecha, idMenu, idRotonda));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return ordenRestaurantes;
@@ -113,15 +149,24 @@ public class DAOTablaOrdenRestaurante
 		String sql = "UPDATE ORDEN_RESTAURANTE SET FECHA = ?, ID_MENU = ?, ID_ROTONDA = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setDate(0, ordenRestaurante.getFecha());
-			preStat.setLong(1, ordenRestaurante.getIdMenu());
-			preStat.setLong(2, ordenRestaurante.getIdRotonda());
-			preStat.setLong(3, ordenRestaurante.getIdOrdenRestaurante());
+			preStat.setDate(1, ordenRestaurante.getFecha());
+			preStat.setLong(2, ordenRestaurante.getIdMenu());
+			preStat.setLong(3, ordenRestaurante.getIdRotonda());
+			preStat.setLong(4, ordenRestaurante.getIdOrdenRestaurante());
 			preStat.executeQuery();
+			conn.commit();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -131,12 +176,21 @@ public class DAOTablaOrdenRestaurante
 		String sql = "DELETE FROM ORDEN_RESTAURANTE WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, ordenRestaurante.getIdOrdenRestaurante());
+			preStat.setLong(1, ordenRestaurante.getIdOrdenRestaurante());
 			preStat.executeQuery();
+			conn.commit();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

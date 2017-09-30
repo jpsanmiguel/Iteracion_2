@@ -2,17 +2,26 @@ package vo;
 
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class OrdenRestaurante {
 	
+	@JsonProperty(value="idOrdenRestaurante")
 	private Long idOrdenRestaurante;
 	
+	@JsonProperty(value="fecha")
 	private Date fecha;
 	
+	@JsonProperty(value="idMenu")
 	private Long idMenu;
 
+	@JsonProperty(value="idRotonda")
 	private Long idRotonda;
 
-	public OrdenRestaurante(Long idOrdenRestaurante, Date fecha, Long idMenu, Long idRotonda) {
+	public OrdenRestaurante(@JsonProperty(value="idOrdenRestaurante")Long idOrdenRestaurante, 
+							@JsonProperty(value="fecha")Date fecha, 
+							@JsonProperty(value="idMenu")Long idMenu, 
+							@JsonProperty(value="idRotonda")Long idRotonda) {
 		this.idOrdenRestaurante = idOrdenRestaurante;
 		this.fecha = fecha;
 		this.idMenu = idMenu;

@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
-import vo.Producto;
+import vo.Restaurante;
 
 
-@Path("productos")
-public class RESTProducto 
+@Path("restaurantes")
+public class RESTRestaurante 
 {
 	@Context
 	private ServletContext context;
@@ -37,26 +37,26 @@ public class RESTProducto
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearProducto(Producto producto) {
+	public Response crearRestaurante(Restaurante restaurante) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.crearProducto(producto);
+			tm.crearRestaurante(restaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(restaurante).build();
 	}
 		
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoId( @PathParam( "id" ) Long id )
+	public Response darRestauranteId( @PathParam( "id" ) Long id )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Producto producto = tm.darProductoPorId(id);
-			return Response.status( 200 ).entity( producto ).build( );			
+			Restaurante restaurante = tm.darRestaurantePorId(id);
+			return Response.status( 200 ).entity( restaurante ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -67,13 +67,13 @@ public class RESTProducto
 	@GET
 	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darProductoNombre( @PathParam( "nombre" ) String nombre )
+	public Response darRestauranteNombre( @PathParam( "nombre" ) String nombre )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			ArrayList<Producto> productos = tm.darProductosPorNombre(nombre);
-			return Response.status( 200 ).entity( productos ).build( );			
+			ArrayList<Restaurante> restaurantes = tm.darRestaurantesPorNombre(nombre);
+			return Response.status( 200 ).entity( restaurantes ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -83,41 +83,41 @@ public class RESTProducto
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response darProductos() {
+	public Response darRestaurantes() {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
-		List<Producto> productos;
+		List<Restaurante> restaurantes;
 		try {
-			productos = tm.darProductos();
+			restaurantes = tm.darRestaurantes();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(productos).build();
+		return Response.status(200).entity(restaurantes).build();
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response actualizarProducto(Producto producto) {
+	public Response actualizarRestaurante(Restaurante restaurante) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.actualizarProducto(producto);
+			tm.actualizarRestaurante(restaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(restaurante).build();
 	}
 	
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response eliminarProducto(Producto producto) {
+	public Response eliminarRestaurante(Restaurante restaurante) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.eliminarProducto(producto);
+			tm.eliminarRestaurante(restaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(producto).build();
+		return Response.status(200).entity(restaurante).build();
 	}
 	
 }

@@ -1,15 +1,20 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Tipo
 {
 
+	@JsonProperty(value="idTipo")
 	private Long idTipo;
 	
+	@JsonProperty(value="nombre")
 	private String nombre;
 	
 	//TODO completar atributos
 	
-	public Tipo(Long idTipo, String nombre)
+	public Tipo(@JsonProperty(value="idTipo")Long idTipo, 
+				@JsonProperty(value="nombre")String nombre)
 	{
 		this.idTipo = idTipo;
 		this.nombre = nombre;

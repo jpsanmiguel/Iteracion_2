@@ -1,13 +1,19 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Categoria {
 
+	@JsonProperty(value="idCategoria")
 	private Long idCategoria;
 
+	@JsonProperty(value="nombre")
 	private String nombre;
 
-	public Categoria(Long id, String nombre) {
-		this.idCategoria = id;
+	public Categoria(@JsonProperty(value="idCategoria")Long idCategoria,
+					 @JsonProperty(value="nombre")String nombre) 
+	{
+		this.idCategoria = idCategoria;
 		this.nombre = nombre;
 	}
 
@@ -15,8 +21,8 @@ public class Categoria {
 		return idCategoria;
 	}
 
-	public void setId(Long id) {
-		this.idCategoria = id;
+	public void setId(Long idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	public String getNombre() {

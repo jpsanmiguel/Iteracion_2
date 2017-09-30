@@ -20,16 +20,23 @@ public class DAOTablaCliente
 		String sql = "INSERT INTO CLIENTE VALUES (?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, cliente.getCedula());
-			preStat.setString(1, cliente.getNombre());
-			preStat.setString(2, cliente.getCorreo());
-			preStat.setLong(3, cliente.getIdRotonda());
+			preStat.setLong(1, cliente.getCedula());
+			preStat.setString(2, cliente.getNombre());
+			preStat.setString(3, cliente.getCorreo());
+			preStat.setLong(4, cliente.getIdRotonda());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -40,7 +47,7 @@ public class DAOTablaCliente
 		String sql = "SELECT * FROM CLIENTE WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, cedula);
+			preStat.setLong(1, cedula);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -50,10 +57,19 @@ public class DAOTablaCliente
 				String correo = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				cliente = new Cliente(cedula1, nombre, correo, idRotonda);
-			}				
+			}		
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return cliente;
@@ -66,7 +82,7 @@ public class DAOTablaCliente
 		String sql = "SELECT * FROM CLIENTE WHERE CORREO = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, correo);
+			preStat.setString(1, correo);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -76,10 +92,19 @@ public class DAOTablaCliente
 				String correo1 = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				cliente = new Cliente(cedula1, nombre, correo1, idRotonda);
-			}				
+			}
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return cliente;
@@ -92,7 +117,7 @@ public class DAOTablaCliente
 		String sql = "SELECT * FROM CLIENTE WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, nombre);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -102,10 +127,19 @@ public class DAOTablaCliente
 				String correo = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				clientes.add(new Cliente(cedula, nombre1, correo, idRotonda));
-			}	
+			}
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return clientes;
@@ -126,10 +160,19 @@ public class DAOTablaCliente
 				String correo = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				clientes.add(new Cliente(cedula, nombre1, correo, idRotonda));
-			}	
+			}
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return clientes;
@@ -140,16 +183,23 @@ public class DAOTablaCliente
 		String sql = "UPDATE CLIENTE SET NOMBRE = ?, CORREO = ?, ID_ROTONDA = ? WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0,  cliente.getNombre());
-			preStat.setString(1, cliente.getCorreo());
-			preStat.setLong(2, cliente.getIdRotonda());
-			preStat.setLong(3, cliente.getCedula());
+			preStat.setString(1,  cliente.getNombre());
+			preStat.setString(2, cliente.getCorreo());
+			preStat.setLong(3, cliente.getIdRotonda());
+			preStat.setLong(4, cliente.getCedula());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -159,13 +209,20 @@ public class DAOTablaCliente
 		String sql = "DELETE FROM CLIENTE WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, cliente.getCedula());
+			preStat.setLong(1, cliente.getCedula());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
-			//TODO preguntar rollback
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

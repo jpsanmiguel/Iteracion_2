@@ -1,23 +1,38 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Restaurante 
 {
 
+	@JsonProperty(value="idRestaurante")
 	private Long idRestaurante;
 	
+	@JsonProperty(value="nombre")
 	private String nombre;
 	
+	@JsonProperty(value="tipoComida")
 	private String tipoComida;
 	
+	@JsonProperty(value="pagWeb")
 	private String pagWeb;
 	
+	@JsonProperty(value="encargado")
 	private String encargado;
 	
+	@JsonProperty(value="idZona")
 	private Long idZona;
 	
+	@JsonProperty(value="idRotonda")
 	private Long idRotonda;
 
-	public Restaurante(Long idRestaurante, String nombre, String tipoComida, String pagWeb, String encargado, Long idZona, Long idRotonda) {
+	public Restaurante(@JsonProperty(value="idRestaurante")Long idRestaurante, 
+					   @JsonProperty(value="nombre")String nombre, 
+					   @JsonProperty(value="tipoComida")String tipoComida, 
+					   @JsonProperty(value="pagWeb")String pagWeb, 
+					   @JsonProperty(value="encargado")String encargado, 
+					   @JsonProperty(value="idZona")Long idZona, 
+					   @JsonProperty(value="idRotonda")Long idRotonda) {
 		this.idRestaurante = idRestaurante;
 		this.nombre = nombre;
 		this.tipoComida = tipoComida;

@@ -20,18 +20,26 @@ public class DAOTablaRestaurante
 		String sql = "INSERT INTO RESTAURANTE VALUES (?,?,?,?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, restaurante.getIdRestaurante());
-			preStat.setString(1, restaurante.getNombre());
-			preStat.setString(2, restaurante.getTipoComida());
-			preStat.setString(3, restaurante.getPagWeb());
-			preStat.setString(4, restaurante.getEncargado());
-			preStat.setLong(5, restaurante.getIdZona());
-			preStat.setLong(6, restaurante.getIdRotonda());
+			preStat.setLong(1, restaurante.getIdRestaurante());
+			preStat.setString(2, restaurante.getNombre());
+			preStat.setString(3, restaurante.getTipoComida());
+			preStat.setString(4, restaurante.getPagWeb());
+			preStat.setString(5, restaurante.getEncargado());
+			preStat.setLong(6, restaurante.getIdZona());
+			preStat.setLong(7, restaurante.getIdRotonda());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -42,7 +50,7 @@ public class DAOTablaRestaurante
 		String sql = "SELECT * FROM RESTAURANTE WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, id);
+			preStat.setLong(1, id);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -56,9 +64,18 @@ public class DAOTablaRestaurante
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				restaurante = new Restaurante(idRestaurante, nombre, tipoComida, pagWeb, encargado, idZona, idRotonda);
 			}				
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return restaurante;
@@ -70,7 +87,7 @@ public class DAOTablaRestaurante
 		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, nombre);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -84,9 +101,18 @@ public class DAOTablaRestaurante
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				restaurantes.add(new Restaurante(idRestaurante, nombre1, tipoComida, pagWeb, encargado, idZona, idRotonda));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return restaurantes;
@@ -111,9 +137,18 @@ public class DAOTablaRestaurante
 				Long idRotonda = rs.getLong("ID_ROTONDA");
 				restaurantes.add(new Restaurante(idRestaurante, nombre, tipoComida, pagWeb, encargado, idZona, idRotonda));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return restaurantes;
@@ -124,15 +159,23 @@ public class DAOTablaRestaurante
 		String sql = "UPDATE RESTAURANTE SET NOMBRE = ?, ID_ZONA = ?, ID_ROTONDA = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, restaurante.getNombre());
-			preStat.setLong(1, restaurante.getIdZona());
-			preStat.setLong(2, restaurante.getIdRotonda());
-			preStat.setLong(3, restaurante.getIdRestaurante());
+			preStat.setString(1, restaurante.getNombre());
+			preStat.setLong(2, restaurante.getIdZona());
+			preStat.setLong(3, restaurante.getIdRotonda());
+			preStat.setLong(4, restaurante.getIdRestaurante());
 			preStat.executeQuery();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -142,12 +185,21 @@ public class DAOTablaRestaurante
 		String sql = "DELETE FROM RESTAURANTE WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, restaurante.getIdRestaurante());
+			preStat.setLong(1, restaurante.getIdRestaurante());
 			preStat.executeQuery();
+			conn.commit();
 			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

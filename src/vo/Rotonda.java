@@ -1,12 +1,17 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class Rotonda {
 
+	@JsonProperty(value="id")
 	private Long id;
 	
+	@JsonProperty(value="nombre")
 	private String nombre;
 
-	public Rotonda(Long id, String nombre) {
+	public Rotonda(@JsonProperty(value="id")Long id,
+				   @JsonProperty(value="nombre")String nombre) {
 		this.id = id;
 		this.nombre = nombre;
 	}

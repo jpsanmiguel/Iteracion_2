@@ -20,12 +20,21 @@ public class DAOTablaTipo
 		String sql = "INSERT INTO TIPO VALUES (?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, tipo.getIdTipo());
-			preStat.setString(1, tipo.getNombre());
+			preStat.setLong(1, tipo.getIdTipo());
+			preStat.setString(2, tipo.getNombre());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -36,7 +45,7 @@ public class DAOTablaTipo
 		String sql = "SELECT * FROM TIPO WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, id);
+			preStat.setLong(1, id);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -45,9 +54,18 @@ public class DAOTablaTipo
 				String nombre = rs.getString("NOMBRE");
 				tipo = new Tipo(idTipo, nombre);
 			}				
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return tipo;
@@ -60,7 +78,7 @@ public class DAOTablaTipo
 		String sql = "SELECT * FROM TIPO WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, nombre);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
@@ -69,9 +87,18 @@ public class DAOTablaTipo
 				String nombreTipo = rs.getString("NOMBRE");
 				tipos.add(new Tipo(id, nombreTipo));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return tipos;
@@ -91,9 +118,18 @@ public class DAOTablaTipo
 				String nombreTipo = rs.getString("NOMBRE");
 				tipos.add(new Tipo(id, nombreTipo));
 			}	
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 		return tipos;
@@ -104,12 +140,21 @@ public class DAOTablaTipo
 		String sql = "UPDATE TIPO SET NOMBRE = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(0, tipo.getNombre());
-			preStat.setLong(1, tipo.getIdTipo());
+			preStat.setString(1, tipo.getNombre());
+			preStat.setLong(2, tipo.getIdTipo());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}
@@ -119,11 +164,20 @@ public class DAOTablaTipo
 		String sql = "DELETE FROM TIPO WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(0, tipo.getIdTipo());
+			preStat.setLong(1, tipo.getIdTipo());
 			preStat.executeQuery();
+			conn.commit();
 		}
 		catch(SQLException e)
 		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

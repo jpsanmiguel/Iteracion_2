@@ -1,12 +1,17 @@
 package vo;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class TipoProducto 
 {
+	@JsonProperty(value="idProducto")
 	private Long idProducto;
 	
+	@JsonProperty(value="idTipo")
 	private Long idTipo;
 
-	public TipoProducto(Long idProducto, Long idTipo) {
+	public TipoProducto(@JsonProperty(value="idProducto")Long idProducto, 
+						@JsonProperty(value="idTipo")Long idTipo) {
 		this.idProducto = idProducto;
 		this.idTipo = idTipo;
 	}
