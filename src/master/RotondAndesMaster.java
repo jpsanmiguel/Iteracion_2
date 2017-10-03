@@ -3,14 +3,18 @@ package master;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Properties;
 
+import dao.DAOTablaAdministradorRestaurante;
+import dao.DAOTablaAdministradorRotonda;
 import dao.DAOTablaCategoria;
 import dao.DAOTablaCliente;
+import dao.DAOTablaContabilidadGeneral;
 import dao.DAOTablaIngrediente;
 import dao.DAOTablaIngredienteProducto;
 import dao.DAOTablaMenu;
@@ -23,8 +27,13 @@ import dao.DAOTablaTipo;
 import dao.DAOTablaTipoProducto;
 
 import dao.DAOTablaZona;
+import dao.DAOTablaContabilidadRestaurante;
+import vo.AdministradorRestaurante;
+import vo.AdministradorRotonda;
 import vo.Categoria;
 import vo.Cliente;
+import vo.ContabilidadGeneral;
+import vo.ContabilidadRestaurante;
 import vo.Ingrediente;
 import vo.IngredienteProducto;
 import vo.Producto;
@@ -41,15 +50,15 @@ import vo.OrdenRestaurante;
 public class RotondAndesMaster 
 {
 	private static final String CONNECTION_DATA_FILE_NAME_REMOTE = "\\conexion.properties";
-	
+
 	private String url;
-	
+
 	private String user;
-	
+
 	private String password;
-	
+
 	private String driver;
-	
+
 	public RotondAndesMaster(String path)
 	{
 		connectionData(path);
@@ -76,11 +85,11 @@ public class RotondAndesMaster
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Inicio metodos Categoria	----------------------------------
-	
-	
-	
+
+
+
 	public void crearCategoria(Categoria categoria)
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
@@ -91,7 +100,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -106,12 +115,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return categoria;		
 	}
-	
+
 	public ArrayList<Categoria> darCategoriaPorNombre(String nombre)
 	{
 		ArrayList<Categoria> categorias = new ArrayList<>();
@@ -122,12 +131,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return categorias;		
 	}
-	
+
 	public ArrayList<Categoria> darCategorias()
 	{
 		ArrayList<Categoria> categorias = new ArrayList<>();
@@ -138,12 +147,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return categorias;
 	}
-	
+
 	public void actualizarCategoria(Categoria categoria)
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
@@ -154,11 +163,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarCategoria(Categoria categoria)
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
@@ -169,17 +178,17 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	// ----------------------------------   Fin metodos Categoria	----------------------------------
-	
-	
+
+
 	// ----------------------------------	Inicio metodos Cliente	----------------------------------
-	
+
 	public void crearCliente(Cliente cliente)
 	{
 		DAOTablaCliente dao = new DAOTablaCliente();
@@ -190,11 +199,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Cliente darClientePorCedula(Long cedula)
 	{
 		Cliente cliente = null;
@@ -205,12 +214,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return cliente;
 	}
-	
+
 	public Cliente darClientePorCorreo(String correo)
 	{
 		Cliente cliente = null;
@@ -221,12 +230,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return cliente;
 	}
-	
+
 	public ArrayList<Cliente> darClientePorNombre(String nombre)
 	{
 		ArrayList<Cliente> cliente = null;
@@ -237,12 +246,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return cliente;
 	}
-	
+
 	public ArrayList<Cliente> darClientes()
 	{
 		ArrayList<Cliente> cliente = null;
@@ -253,12 +262,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return cliente;
 	}
-	
+
 	public void actualizarCliente(Cliente cliente)
 	{
 		DAOTablaCliente dao = new DAOTablaCliente();
@@ -269,11 +278,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarCliente(Cliente cliente)
 	{
 		DAOTablaCliente dao = new DAOTablaCliente();
@@ -284,15 +293,15 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------	 Fin metodos Cliente	----------------------------------
-	
+
 	// ---------------------------------- Inicio metodos Ingrediente ----------------------------------
-	
+
 	public void crearIngrediente(Ingrediente ingrediente)
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
@@ -303,7 +312,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -318,12 +327,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ingrediente;		
 	}
-	
+
 	public ArrayList<Ingrediente> darIngredientePorNombre(String nombre)
 	{
 		ArrayList<Ingrediente> ingredientes = new ArrayList<>();
@@ -334,12 +343,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ingredientes;		
 	}
-	
+
 	public ArrayList<Ingrediente> darIngredientes()
 	{
 		ArrayList<Ingrediente> ingredientes = new ArrayList<>();
@@ -350,12 +359,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ingredientes;
 	}
-	
+
 	public void actualizarIngrediente(Ingrediente ingrediente)
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
@@ -366,11 +375,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarIngrediente(Ingrediente ingrediente)
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
@@ -381,16 +390,16 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Fin metodos Ingrediente	----------------------------------
-	
-	
+
+
 	// ----------------------------------Inicio metodos IngredienteProducto	----------------------------------
-	
+
 	public void crearIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
@@ -401,11 +410,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<IngredienteProducto> darIngredientesProductoPorIdIngrediente(Long idIngrediente)
 	{
 		ArrayList<IngredienteProducto> ingredientesProductos = new ArrayList<>();
@@ -416,12 +425,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ingredientesProductos;
 	}
-	
+
 	public ArrayList<IngredienteProducto> darIngredientesProductoPorIdProducto(Long idProducto)
 	{
 		ArrayList<IngredienteProducto> ingredientesProductos = new ArrayList<>();
@@ -432,12 +441,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ingredientesProductos;
 	}
-	
+
 	public ArrayList<IngredienteProducto> darIngredientesProductos()
 	{
 		ArrayList<IngredienteProducto> ingredientesProductos = new ArrayList<>();
@@ -448,12 +457,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ingredientesProductos;
 	}
-	
+
 	public void actualizarProductoDeIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
@@ -464,11 +473,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void actualizarIngredienteDeIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
@@ -479,11 +488,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
@@ -494,15 +503,15 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Fin metodos IngredienteProducto	----------------------------------
-	
+
 	// ----------------------------------	   Inicio metodos Menu		----------------------------------
-	
+
 	public void crearMenu(Menu menu)
 	{
 		DAOTablaMenu dao = new DAOTablaMenu();
@@ -513,11 +522,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Menu darMenuPorId(Long id)
 	{
 		Menu menu = null;
@@ -528,12 +537,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return menu;
 	}
-	
+
 	public ArrayList<Menu> darMenusPorRestaurante(Long idRestaurante)
 	{
 		ArrayList<Menu> menus = null;
@@ -544,12 +553,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return menus;
 	}
-	
+
 	public ArrayList<Menu> darMenus()
 	{
 		ArrayList<Menu> menus = null;
@@ -560,12 +569,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return menus;
 	}
-	
+
 	public void actualizarMenu(Menu menu)
 	{
 		DAOTablaMenu dao = new DAOTablaMenu();
@@ -575,11 +584,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarMenu(Menu menu)
 	{
 		DAOTablaMenu dao = new DAOTablaMenu();
@@ -589,15 +598,15 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  		 Fin metodos Menu		----------------------------------
-	
+
 	// ----------------------------------Inicio metodos OrdenRestaurante	----------------------------------
-	
+
 	public void crearOrdenRestaurante(OrdenRestaurante ordenRestaurante)
 	{
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
@@ -608,7 +617,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -623,12 +632,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ordenRestaurante;		
 	}
-	
+
 	public ArrayList<OrdenRestaurante> darOrdenRestaurantePorMenu(Long idMenu)
 	{
 		ArrayList<OrdenRestaurante> ordenRestaurantes = new ArrayList<>();
@@ -639,12 +648,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ordenRestaurantes;		
 	}
-	
+
 	public ArrayList<OrdenRestaurante> darOrdenRestaurantes()
 	{
 		ArrayList<OrdenRestaurante> ordenRestaurantes = new ArrayList<>();
@@ -655,12 +664,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return ordenRestaurantes;
 	}
-	
+
 	public void actualizarOrdenRestaurante(OrdenRestaurante ordenRestaurante)
 	{
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
@@ -671,11 +680,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarOrdenRestaurante(OrdenRestaurante ordenRestaurante)
 	{
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
@@ -686,13 +695,13 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Fin metodos OrdenRestaurante	----------------------------------
-	
+
 	// ----------------------------------Inicio metodos Reserva	----------------------------------
 
 	public void crearReserva(Reserva reserva)
@@ -705,11 +714,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Reserva darReservaPorId(Long id)
 	{
 		Reserva reserva = null;
@@ -720,12 +729,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return reserva;
 	}
-	
+
 	public ArrayList<Reserva> darReservaPorIdCliente(Long idCliente)
 	{
 		ArrayList<Reserva> reservas = null;
@@ -736,12 +745,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return reservas;
 	}
-	
+
 	public ArrayList<Reserva> darReservaPorNombre(Long idZona)
 	{
 		ArrayList<Reserva> reserva = null;
@@ -752,12 +761,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return reserva;
 	}
-	
+
 	public ArrayList<Reserva> darReservas()
 	{
 		ArrayList<Reserva> reserva = null;
@@ -768,12 +777,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return reserva;
 	}
-	
+
 	public void actualizarReserva(Reserva reserva)
 	{
 		DAOTablaReserva dao = new DAOTablaReserva();
@@ -784,11 +793,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarReserva(Reserva reserva)
 	{
 		DAOTablaReserva dao = new DAOTablaReserva();
@@ -799,16 +808,16 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	// ----------------------------------  Fin metodos Reserva	----------------------------------
-	
+
 	// ----------------------------------Inicio metodos Restaurante	----------------------------------
-	
+
 	public void crearRestaurante(Restaurante restaurante)
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
@@ -819,7 +828,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -834,28 +843,28 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return restaurante;
 	}
 
-//	public ArrayList<Restaurante> darRestaurantesPorNombre(String nombre)
-//	{
-//		ArrayList<Restaurante> restaurantes = new ArrayList<>();
-//		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-//		try(Connection conn = crearConexion())
-//		{
-//			restaurantes = dao.darRestaurantesPorNombre(conn, nombre);
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//		}
-//		return restaurantes;
-//	}
-//	
+	//	public ArrayList<Restaurante> darRestaurantesPorNombre(String nombre)
+	//	{
+	//		ArrayList<Restaurante> restaurantes = new ArrayList<>();
+	//		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+	//		try(Connection conn = crearConexion())
+	//		{
+	//			restaurantes = dao.darRestaurantesPorNombre(conn, nombre);
+	//		}
+	//		catch(SQLException e)
+	//		{
+	//			 
+	//			e.printStackTrace();
+	//		}
+	//		return restaurantes;
+	//	}
+	//	
 	public ArrayList<Restaurante> darRestaurantes()
 	{
 		ArrayList<Restaurante> restaurantes = new ArrayList<>();
@@ -866,7 +875,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		catch(Exception e)
@@ -875,7 +884,7 @@ public class RotondAndesMaster
 		}
 		return restaurantes;
 	}
-	
+
 	public void actualizarRestaurante(Restaurante restaurante)
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
@@ -886,11 +895,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarRestaurante(Restaurante restaurante)
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
@@ -901,15 +910,15 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Fin metodos Restaurante	----------------------------------
-	
+
 	// ----------------------------------Inicio metodos Tipo	----------------------------------
-	
+
 	public void crearTipo(Tipo tipo)
 	{
 		DAOTablaTipo dao = new DAOTablaTipo();
@@ -920,7 +929,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -935,7 +944,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return tipo;
@@ -951,12 +960,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return tipos;
 	}
-	
+
 	public ArrayList<Tipo> darTipos()
 	{
 		ArrayList<Tipo> tipos = new ArrayList<>();
@@ -967,7 +976,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		catch(Exception e)
@@ -976,7 +985,7 @@ public class RotondAndesMaster
 		}
 		return tipos;
 	}
-	
+
 	public void actualizarTipo(Tipo tipo)
 	{
 		DAOTablaTipo dao = new DAOTablaTipo();
@@ -987,11 +996,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarTipo(Tipo tipo)
 	{
 		DAOTablaTipo dao = new DAOTablaTipo();
@@ -1002,15 +1011,15 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Fin metodos Tipo	----------------------------------
-	
+
 	// ----------------------------------Inicio metodos TipoProducto	----------------------------------
-	
+
 	public void crearTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
@@ -1021,11 +1030,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<TipoProducto> darTiposProductoPorIdTipo(Long idTipo)
 	{
 		ArrayList<TipoProducto> tiposProductos = new ArrayList<>();
@@ -1036,12 +1045,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return tiposProductos;
 	}
-	
+
 	public ArrayList<TipoProducto> darTiposProductoPorIdProducto(Long idProducto)
 	{
 		ArrayList<TipoProducto> tiposProductos = new ArrayList<>();
@@ -1052,12 +1061,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return tiposProductos;
 	}
-	
+
 	public ArrayList<TipoProducto> darTiposProductos()
 	{
 		ArrayList<TipoProducto> tiposProductos = new ArrayList<>();
@@ -1068,12 +1077,12 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return tiposProductos;
 	}
-	
+
 	public void actualizarProductoDeTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
@@ -1084,11 +1093,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void actualizarTipoDeTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
@@ -1099,11 +1108,11 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
@@ -1114,15 +1123,15 @@ public class RotondAndesMaster
 		} 
 		catch (SQLException e) 
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Fin metodos TipoProducto	----------------------------------
-	
+
 	// ----------------------------------Inicio metodos Zona	----------------------------------
-	
+
 	public void crearZona(Zona zona)
 	{
 		DAOTablaZona dao = new DAOTablaZona();
@@ -1133,7 +1142,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -1148,7 +1157,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return zona;
@@ -1164,12 +1173,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return zonas;
 	}
-	
+
 	public ArrayList<Zona> darZonas()
 	{
 		ArrayList<Zona> zonas = new ArrayList<>();
@@ -1180,7 +1189,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		catch(Exception e)
@@ -1189,7 +1198,7 @@ public class RotondAndesMaster
 		}
 		return zonas;
 	}
-	
+
 	public void actualizarZona(Zona zona)
 	{
 		DAOTablaZona dao = new DAOTablaZona();
@@ -1200,11 +1209,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarZona(Zona zona)
 	{
 		DAOTablaZona dao = new DAOTablaZona();
@@ -1215,16 +1224,16 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------  Fin metodos Zona	----------------------------------
 
-	
+
 	// ----------------------------------	Inicio metodos Rotonda	----------------------------------
-	
+
 	public void crearRotonda(Rotonda rotonda)
 	{
 		DAOTablaRotonda dao = new DAOTablaRotonda();
@@ -1235,7 +1244,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -1250,7 +1259,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return rotonda;
@@ -1266,12 +1275,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return rotondas;
 	}
-	
+
 	public ArrayList<Rotonda> darRotondas()
 	{
 		ArrayList<Rotonda> rotondas = new ArrayList<>();
@@ -1282,7 +1291,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		catch(Exception e)
@@ -1291,7 +1300,7 @@ public class RotondAndesMaster
 		}
 		return rotondas;
 	}
-	
+
 	public void actualizarRotonda(Rotonda rotonda)
 	{
 		DAOTablaRotonda dao = new DAOTablaRotonda();
@@ -1302,11 +1311,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarRotonda(Rotonda rotonda)
 	{
 		DAOTablaRotonda dao = new DAOTablaRotonda();
@@ -1317,14 +1326,14 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	// ----------------------------------	Fin metodos Producto	----------------------------------
-	
-	
+
+
 	// ----------------------------------	Inicio metodos Producto	----------------------------------
 
 	public void crearProducto(Producto producto)
@@ -1337,7 +1346,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
@@ -1352,7 +1361,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return producto;
@@ -1368,12 +1377,12 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		return productos;
 	}
-	
+
 	public ArrayList<Producto> darProductos()
 	{
 		ArrayList<Producto> productos = new ArrayList<>();
@@ -1384,7 +1393,7 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 		catch(Exception e)
@@ -1393,7 +1402,7 @@ public class RotondAndesMaster
 		}
 		return productos;
 	}
-	
+
 	public void actualizarProducto(Producto producto)
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
@@ -1404,11 +1413,11 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void eliminarProducto(Producto producto)
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
@@ -1419,137 +1428,415 @@ public class RotondAndesMaster
 		}
 		catch(SQLException e)
 		{
-			 
+
 			e.printStackTrace();
 		}
 	}
 
-//	// ----------------------------------	 Fin metodos Producto	----------------------------------
-//	// ----------------------------------	Inicio metodos Usuario	----------------------------------
-//
-//	public void crearUsuario(Usuario us)
-//	{
-//		// TODO Auto-generated method stub
-//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
-//		try(Connection conn = crearConexion())
-//		{
-//			dao.agregarUsuario(conn, us);
-//			conn.commit();
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	public Usuario darUsuarioPorCedula(Long cedula) 
-//	
-//	{
-//		
-//		Usuario cliente = null;
-//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
-//		try(Connection conn = crearConexion())
-//		{
-//			cliente = dao.darUsuarioPorCedula(conn, cedula);
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//		}
-//		return cliente;
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	public ArrayList<Usuario> darUsuarioPorNombre(String nombre) 
-//	{
-//		ArrayList<Usuario> cliente = null;
-//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
-//		try(Connection conn = crearConexion())
-//		{
-//			cliente = dao.darUsuariosPorNombre(conn, nombre);
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//		}
-//		return cliente;
-//
-//	}
-//
-//	public Usuario darUsuarioPorCorreo(String correo) {
-//		// TODO Auto-generated method stub
-//		
-//		Usuario cliente = null;
-//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
-//		try(Connection conn = crearConexion())
-//		{
-//			cliente = dao.darUsuarioPorCorreo(conn, correo);
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//		}
-//		return cliente;
-//
-//	}
-//
-//	public List<Usuario> darUsuarios() {
-//		// TODO Auto-generated method stub
-//		
-//		ArrayList<Usuario> cliente = null;
-//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
-//		try(Connection conn = crearConexion())
-//		{
-//			cliente = dao.darUsuarios(conn);
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//		}
-//		return cliente;
-//
-//	}
-//
-//	public void eliminarUsuario(Usuario cliente) 
-//	{
-//		// TODO Auto-generated method stub
-//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
-//		try(Connection conn = crearConexion())
-//		{
-//			dao.eliminarUsuario(conn, cliente);
-//			conn.commit();
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//		}	
-//	}
-//
-//	public void actualizarUsuario(Usuario cliente) 
-//	{
-//		// TODO Auto-generated method stub
-//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
-//	try(Connection conn = crearConexion())
-//		{
-//			dao.actualizarUsuario(conn, cliente);
-//			conn.commit();
-//		}
-//		catch(SQLException e)
-//		{
-//			 
-//			e.printStackTrace();
-//	}	
-//	}
-//	
-//	// ----------------------------------	 Fin metodos Producto	----------------------------------
-//	
+	// ----------------------------------	 Fin metodos Producto	----------------------------------
+	// ----------------------------------	Inicio metodos AdministradorRotonda	----------------------------------
 
+	public void crearAdministradorRotonda(AdministradorRotonda cliente)
+	{
+		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
+		try(Connection conn = crearConexion())
+		{
+			dao.agregarAdministradorRotonda(conn, cliente);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public AdministradorRotonda darAdministradorRotondaPorCedula(Long cedula)
+	{
+		AdministradorRotonda cliente = null;
+		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRotondaPorCedula(conn, cedula);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public AdministradorRotonda darAdministradorRotondaPorCorreo(String correo)
+	{
+		AdministradorRotonda cliente = null;
+		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRotondaPorCorreo(conn, correo);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public ArrayList<AdministradorRotonda> darAdministradorRotondaPorNombre(String nombre)
+	{
+		ArrayList<AdministradorRotonda> cliente = null;
+		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRotondasPorNombre(conn, nombre);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public ArrayList<AdministradorRotonda> darAdministradorRotondas()
+	{
+		ArrayList<AdministradorRotonda> cliente = null;
+		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRotondas(conn);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public void actualizarAdministradorRotonda(AdministradorRotonda cliente)
+	{
+		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
+		try(Connection conn = crearConexion())
+		{
+			dao.actualizarAdministradorRotonda(conn, cliente);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public void eliminarAdministradorRotonda(AdministradorRotonda cliente)
+	{
+		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
+		try(Connection conn = crearConexion())
+		{
+			dao.eliminarAdministradorRotonda(conn, cliente);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	// ----------------------------------	 Fin metodos AdministradorRotonda	----------------------------------
+	// ----------------------------------	Inicio metodos AdministradorRestaurante	----------------------------------
+
+	public void crearAdministradorRestaurante(AdministradorRestaurante cliente)
+	{
+		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			dao.agregarAdministradorRestaurante(conn, cliente);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public AdministradorRestaurante darAdministradorRestaurantePorCedula(Long cedula)
+	{
+		AdministradorRestaurante cliente = null;
+		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRestaurantePorCedula(conn, cedula);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public AdministradorRestaurante darAdministradorRestaurantePorCorreo(String correo)
+	{
+		AdministradorRestaurante cliente = null;
+		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRestaurantePorCorreo(conn, correo);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public ArrayList<AdministradorRestaurante> darAdministradorRestaurantePorNombre(String nombre)
+	{
+		ArrayList<AdministradorRestaurante> cliente = null;
+		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRestaurantesPorNombre(conn, nombre);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public ArrayList<AdministradorRestaurante> darAdministradorRestaurantes()
+	{
+		ArrayList<AdministradorRestaurante> cliente = null;
+		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			cliente = dao.darAdministradorRestaurantes(conn);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+
+	public void actualizarAdministradorRestaurante(AdministradorRestaurante cliente)
+	{
+		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			dao.actualizarAdministradorRestaurante(conn, cliente);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public void eliminarAdministradorRestaurante(AdministradorRestaurante cliente)
+	{
+		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			dao.eliminarAdministradorRestaurante(conn, cliente);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	// ----------------------------------	 Fin metodos AdministradorRestaurante	----------------------------------
+	// ----------------------------------Inicio metodos ContabilidadRestaurante	----------------------------------
+
+	public void crearContabilidadRestaurante(ContabilidadRestaurante re)
+	{
+		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			dao.agregarContabilidadRestaurante(conn, re);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+	public ContabilidadRestaurante darContabilidadRestaurantePorId(Long id)
+	{
+		ContabilidadRestaurante contabilidadRestaurante = null;
+		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			contabilidadRestaurante = dao.darContabilidadRestaurantePorId(conn, id);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return contabilidadRestaurante;
+	}
+	public ArrayList<ContabilidadRestaurante> darContabilidadRestaurantePorFecha(Date fecha)
+	{
+		ArrayList<ContabilidadRestaurante> reserva = null;
+		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			reserva = dao.darContabilidadesPorFecha(conn, fecha);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return reserva;
+	}
+
+	public ArrayList<ContabilidadRestaurante> darContabilidadesRestaurante()
+	{
+		ArrayList<ContabilidadRestaurante> reserva = null;
+		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			reserva = dao.darContabilidades(conn);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return reserva;
+	}
+
+	public void actualizarContabilidadRestaurante(ContabilidadRestaurante re)
+	{
+		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			dao.actualizarContabilidadRestaurante(conn, re);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public void eliminarContabilidadRestaurante(ContabilidadRestaurante re)
+	{
+		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
+		try(Connection conn = crearConexion())
+		{
+			dao.eliminarContabilidadRestaurante(conn, re);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+
+	// ----------------------------------  Fin métodos ContabilidadRestaurante	----------------------------------
+
+	// ----------------------------------Inicio metodos ContabilidadGeneral	----------------------------------
+
+	public void crearContabilidadGeneral(ContabilidadGeneral re)
+	{
+		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
+		try(Connection conn = crearConexion())
+		{
+			dao.agregarContabilidadGeneral(conn, re);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<ContabilidadGeneral> darContabilidadGeneralPorFecha(Date fecha)
+	{
+		ArrayList<ContabilidadGeneral> reserva = null;
+		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
+		try(Connection conn = crearConexion())
+		{
+			reserva = dao.darContabilidadesPorFecha(conn, fecha);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return reserva;
+	}
+
+	public ArrayList<ContabilidadGeneral> darContabilidadesGeneral()
+	{
+		ArrayList<ContabilidadGeneral> reserva = null;
+		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
+		try(Connection conn = crearConexion())
+		{
+			reserva = dao.darContabilidades(conn);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return reserva;
+	}
+
+	public void actualizarContabilidadGeneral(ContabilidadGeneral re)
+	{
+		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
+		try(Connection conn = crearConexion())
+		{
+			dao.actualizarContabilidadGeneral(conn, re);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public void eliminarContabilidadGeneral(ContabilidadGeneral re)
+	{
+		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
+		try(Connection conn = crearConexion())
+		{
+			dao.eliminarContabilidadGeneral(conn, re);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+
+	// ----------------------------------  Fin métodos ContabilidadGeneral	----------------------------------
+	// ----------------------------------  Inicio métodos Consultas	----------------------------------
 	
+	
+	// ----------------------------------  Fin métodos Consultas	----------------------------------
 }

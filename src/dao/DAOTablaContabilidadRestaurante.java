@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 
 import vo.ContabilidadRestaurante;
-import vo.Restaurante;
 
-public class DATOTablaContabilidadRestaurante 
+
+public class DAOTablaContabilidadRestaurante 
 {
-	public DATOTablaContabilidadRestaurante()
+	public DAOTablaContabilidadRestaurante()
 	{
 		
 	}
@@ -46,7 +46,7 @@ public class DATOTablaContabilidadRestaurante
 		}
 	}
 	
-	public ContabilidadRestaurante darContabilidadRestaurantePorid(Connection conn,Long idVenta)
+	public ContabilidadRestaurante darContabilidadRestaurantePorId(Connection conn,Long idVenta)
 	{
 		ContabilidadRestaurante restaurante = null;
 		String sql = "SELECT * FROM CONTABILIDADRESTAURANTE WHERE ID_ORDEN = ?";

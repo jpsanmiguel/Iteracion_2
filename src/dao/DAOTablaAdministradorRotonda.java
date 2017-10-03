@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vo.AdministradorRotonda;
-import vo.Cliente;
+
 
 public class DAOTablaAdministradorRotonda
 {
@@ -16,7 +16,7 @@ public class DAOTablaAdministradorRotonda
 		
 	}
 	
-	public void agregarCliente(Connection conn, AdministradorRotonda cliente)
+	public void agregarAdministradorRotonda(Connection conn, AdministradorRotonda cliente)
 	{
 		String sql = "INSERT INTO ADMINISTRADORROTONDA VALUES (?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
@@ -42,7 +42,7 @@ public class DAOTablaAdministradorRotonda
 		}
 	}
 	
-	public AdministradorRotonda darClientePorCedula(Connection conn, Long cedula)
+	public AdministradorRotonda darAdministradorRotondaPorCedula(Connection conn, Long cedula)
 	{
 		AdministradorRotonda cliente = null;
 		String sql = "SELECT * FROM ADMINISTRADORROTONDA WHERE CEDULA = ?";
@@ -77,7 +77,7 @@ public class DAOTablaAdministradorRotonda
 	}
 	
 	
-	public AdministradorRotonda darClientePorCorreo(Connection conn, String correo)
+	public AdministradorRotonda darAdministradorRotondaPorCorreo(Connection conn, String correo)
 	{
 
 AdministradorRotonda cliente = null;
@@ -113,7 +113,7 @@ AdministradorRotonda cliente = null;
 	}
 	
 	
-	public ArrayList<AdministradorRotonda> darClientesPorNombre(Connection conn, String nombre)
+	public ArrayList<AdministradorRotonda> darAdministradorRotondasPorNombre(Connection conn, String nombre)
 	{
 		ArrayList<AdministradorRotonda> clientes = new ArrayList<>();
 		String sql = "SELECT * FROM ADMINISTRADORROTONDA WHERE NOMBRE = ?";
@@ -147,7 +147,7 @@ AdministradorRotonda cliente = null;
 		return clientes;
 	}
 	
-	public ArrayList<AdministradorRotonda> darClientes(Connection conn)
+	public ArrayList<AdministradorRotonda> darAdministradorRotondas(Connection conn)
 	{
 		ArrayList<AdministradorRotonda> clientes = new ArrayList<>();
 		String sql = "SELECT * FROM ADMINISTRADORROTONDA";
@@ -180,7 +180,7 @@ AdministradorRotonda cliente = null;
 		return clientes;
 	}
 	
-	public void actualizarCliente(Connection conn, AdministradorRotonda cliente)
+	public void actualizarAdministradorRotonda(Connection conn, AdministradorRotonda cliente)
 	{
 		String sql = "UPDATE ADMINISTRADORROTONDA SET NOMBRE = ?, CORREO = ?, ID_ROTONDA = ? WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
@@ -206,7 +206,7 @@ AdministradorRotonda cliente = null;
 		}
 	}
 	
-	public void eliminarCliente(Connection conn, AdministradorRotonda cliente)
+	public void eliminarAdministradorRotonda(Connection conn, AdministradorRotonda cliente)
 	{
 		String sql = "DELETE FROM ADMINISTRADORROTONDA WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))

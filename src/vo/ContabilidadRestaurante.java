@@ -1,6 +1,6 @@
 package vo;
 
-import java.sql.Date;
+import    java.sql.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 

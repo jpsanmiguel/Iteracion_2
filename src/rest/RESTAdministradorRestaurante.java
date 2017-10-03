@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
-import vo.Cliente;
+import vo.AdministradorRestaurante;
 
 
-@Path("clientes")
-public class RESTCliente 
+@Path("administradorrestaurante")
+public class RESTAdministradorRestaurante 
 {
 	@Context
 	private ServletContext context;
@@ -37,10 +37,10 @@ public class RESTCliente
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearCliente(Cliente cliente) {
+	public Response crearAdministradorRestaurante(AdministradorRestaurante cliente) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.crearCliente(cliente);
+			tm.crearAdministradorRestaurante(cliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -50,12 +50,12 @@ public class RESTCliente
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteId( @PathParam( "id" ) Long id )
+	public Response darAdministradorRestauranteId( @PathParam( "id" ) Long id )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Cliente cliente = tm.darClientePorCedula(id);
+			AdministradorRestaurante cliente = tm.darAdministradorRestaurantePorCedula(id);
 			return Response.status( 200 ).entity( cliente ).build( );			
 		}
 		catch( Exception e )
@@ -67,12 +67,12 @@ public class RESTCliente
 	@GET
 	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteNombre( @PathParam( "nombre" ) String nombre )
+	public Response darAdministradorRestauranteNombre( @PathParam( "nombre" ) String nombre )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			ArrayList<Cliente> clientes = tm.darClientePorNombre(nombre);
+			ArrayList<AdministradorRestaurante> clientes = tm.darAdministradorRestaurantePorNombre(nombre);
 			return Response.status( 200 ).entity( clientes ).build( );			
 		}
 		catch( Exception e )
@@ -84,12 +84,12 @@ public class RESTCliente
 	@GET
 	@Path( "{correo}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteCorreo( @PathParam( "correo" ) String correo )
+	public Response darAdministradorRestauranteCorreo( @PathParam( "correo" ) String correo )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Cliente cliente = tm.darClientePorCorreo(correo);
+			AdministradorRestaurante cliente = tm.darAdministradorRestaurantePorCorreo(correo);
 			return Response.status( 200 ).entity( cliente ).build( );			
 		}
 		catch( Exception e )
@@ -100,11 +100,11 @@ public class RESTCliente
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response darClientes() {
+	public Response darAdministradorRestaurantes() {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
-		List<Cliente> clientes;
+		List<AdministradorRestaurante> clientes;
 		try {
-			clientes = tm.darClientes();
+			clientes = tm.darAdministradorRestaurantes();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -114,10 +114,10 @@ public class RESTCliente
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response actualizarCliente(Cliente cliente) {
+	public Response actualizarAdministradorRestaurante(AdministradorRestaurante cliente) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.actualizarCliente(cliente);
+			tm.actualizarAdministradorRestaurante(cliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -127,10 +127,10 @@ public class RESTCliente
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response eliminarCliente(Cliente cliente) {
+	public Response eliminarAdministradorRestaurante(AdministradorRestaurante cliente) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.eliminarCliente(cliente);
+			tm.eliminarAdministradorRestaurante(cliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
-import vo.Cliente;
+import vo.AdministradorRotonda;
 
 
-@Path("clientes")
-public class RESTCliente 
+@Path("administradorrotonda")
+public class RESTAdministradorRotonda 
 {
 	@Context
 	private ServletContext context;
@@ -37,10 +37,10 @@ public class RESTCliente
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearCliente(Cliente cliente) {
+	public Response crearAdministradorRotonda(AdministradorRotonda cliente) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.crearCliente(cliente);
+			tm.crearAdministradorRotonda(cliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -50,12 +50,12 @@ public class RESTCliente
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteId( @PathParam( "id" ) Long id )
+	public Response darAdministradorRotondaId( @PathParam( "id" ) Long id )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Cliente cliente = tm.darClientePorCedula(id);
+			AdministradorRotonda cliente = tm.darAdministradorRotondaPorCedula(id);
 			return Response.status( 200 ).entity( cliente ).build( );			
 		}
 		catch( Exception e )
@@ -67,12 +67,12 @@ public class RESTCliente
 	@GET
 	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteNombre( @PathParam( "nombre" ) String nombre )
+	public Response darAdministradorRotondaNombre( @PathParam( "nombre" ) String nombre )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			ArrayList<Cliente> clientes = tm.darClientePorNombre(nombre);
+			ArrayList<AdministradorRotonda> clientes = tm.darAdministradorRotondaPorNombre(nombre);
 			return Response.status( 200 ).entity( clientes ).build( );			
 		}
 		catch( Exception e )
@@ -84,12 +84,12 @@ public class RESTCliente
 	@GET
 	@Path( "{correo}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteCorreo( @PathParam( "correo" ) String correo )
+	public Response darAdministradorRotondaCorreo( @PathParam( "correo" ) String correo )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Cliente cliente = tm.darClientePorCorreo(correo);
+			AdministradorRotonda cliente = tm.darAdministradorRotondaPorCorreo(correo);
 			return Response.status( 200 ).entity( cliente ).build( );			
 		}
 		catch( Exception e )
@@ -100,11 +100,11 @@ public class RESTCliente
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response darClientes() {
+	public Response darAdministradorRotondas() {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
-		List<Cliente> clientes;
+		List<AdministradorRotonda> clientes;
 		try {
-			clientes = tm.darClientes();
+			clientes = tm.darAdministradorRotondas();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -114,10 +114,10 @@ public class RESTCliente
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response actualizarCliente(Cliente cliente) {
+	public Response actualizarAdministradorRotonda(AdministradorRotonda cliente) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.actualizarCliente(cliente);
+			tm.actualizarAdministradorRotonda(cliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -127,10 +127,10 @@ public class RESTCliente
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response eliminarCliente(Cliente cliente) {
+	public Response eliminarAdministradorRotonda(AdministradorRotonda cliente) {
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
-			tm.eliminarCliente(cliente);
+			tm.eliminarAdministradorRotonda(cliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

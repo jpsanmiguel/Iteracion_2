@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vo.ContabilidadGeneral;
-import vo.ContabilidadRestaurante;
-import vo.Restaurante;
+
 
 public class DAOTablaContabilidadGeneral 
 {
@@ -18,9 +17,9 @@ public class DAOTablaContabilidadGeneral
 		
 	}
 	
-	public void agregarContabilidadGeneralRestaurante(Connection conn, ContabilidadGeneral c)
+	public void agregarContabilidadGeneral(Connection conn, ContabilidadGeneral c)
 	{
-		String sql = "INSERT INTO CONTABILIDADRESTAURANTE VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO CONTABILIDADGENERALVALUES (?,?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 		
@@ -155,7 +154,7 @@ public class DAOTablaContabilidadGeneral
 		return restaurantes;
 	}
 	
-	public void actualizarContabilidadRestaurante(Connection conn, ContabilidadGeneral restaurante)
+	public void actualizarContabilidadGeneral(Connection conn, ContabilidadGeneral restaurante)
 	{
 		String sql = "UPDATE CONTABILIDADGENERAL SET VALOR_COSTOS= ?, VALOR_VENTAS = ? "
 				+ "WHERE NOMBRE_RESTAURANTE = ? AND FECHA =? AND ID_ROTONDA =? ";
@@ -183,7 +182,7 @@ public class DAOTablaContabilidadGeneral
 		}
 	}
 
-	public void eliminarRestaurante(Connection conn, ContabilidadGeneral restaurante)
+	public void eliminarContabilidadGeneral(Connection conn, ContabilidadGeneral restaurante)
 	{
 		String sql = "DELETE FROM CONTABILIDADGENERAL WHERE NOMBRE_RESTAURANTE = ? AND FECHA =? AND ID_ROTONDA =?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
