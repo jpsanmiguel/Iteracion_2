@@ -19,7 +19,7 @@ public class DAOTablaContabilidadGeneral
 	
 	public void agregarContabilidadGeneral(Connection conn, ContabilidadGeneral c)
 	{
-		String sql = "INSERT INTO CONTABILIDADGENERALVALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO CONTABILIDADGENERAL VALUES (?,?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 		
