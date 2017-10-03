@@ -64,39 +64,39 @@ public class RESTCliente
 		}
 	}
 	
-	@GET
-	@Path( "{nombre}" )
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteNombre( @PathParam( "nombre" ) String nombre )
-	{
-		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
-		try
-		{
-			ArrayList<Cliente> clientes = tm.darClientePorNombre(nombre);
-			return Response.status( 200 ).entity( clientes ).build( );			
-		}
-		catch( Exception e )
-		{
-			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
-		}
-	}
-	
-	@GET
-	@Path( "{correo}" )
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darClienteCorreo( @PathParam( "correo" ) String correo )
-	{
-		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
-		try
-		{
-			Cliente cliente = tm.darClientePorCorreo(correo);
-			return Response.status( 200 ).entity( cliente ).build( );			
-		}
-		catch( Exception e )
-		{
-			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
-		}
-	}
+//	@GET
+//	@Path( "{nombre}" )
+//	@Produces( { MediaType.APPLICATION_JSON } )
+//	public Response darClienteNombre( @PathParam( "nombre" ) String nombre )
+//	{
+//		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
+//		try
+//		{
+//			ArrayList<Cliente> clientes = tm.darClientePorNombre(nombre);
+//			return Response.status( 200 ).entity( clientes ).build( );			
+//		}
+//		catch( Exception e )
+//		{
+//			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+//		}
+//	}
+//	
+//	@GET
+//	@Path( "{correo}" )
+//	@Produces( { MediaType.APPLICATION_JSON } )
+//	public Response darClienteCorreo( @PathParam( "correo" ) String correo )
+//	{
+//		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
+//		try
+//		{
+//			Cliente cliente = tm.darClientePorCorreo(correo);
+//			return Response.status( 200 ).entity( cliente ).build( );			
+//		}
+//		catch( Exception e )
+//		{
+//			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+//		}
+//	}
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })

@@ -23,7 +23,7 @@ public class DAOTablaMenu
 			preStat.setLong(1, menu.getIdMenu());
 			preStat.setDouble(2, menu.getCosto());
 			preStat.setDouble(3, menu.getPrecio());
-			preStat.setLong(4, menu.getIdRestaurante());
+			preStat.setString(4, menu.getNombreRestaurante());
 			preStat.executeQuery();
 			conn.commit();
 		}
@@ -55,7 +55,7 @@ public class DAOTablaMenu
 				Long idMenu = rs.getLong("ID");
 				double costo = rs.getDouble("COSTO");
 				double precio = rs.getDouble("PRECIO");
-				Long idRestaurante = rs.getLong("ID_RESTAURANTE");
+				String idRestaurante = rs.getString("NOMBRE_RESTAURANTE");
 				menu = new Menu(idMenu, costo, precio, idRestaurante);
 			}				
 			conn.commit();
@@ -89,7 +89,7 @@ public class DAOTablaMenu
 				Long idMenu = rs.getLong("ID");
 				double costo = rs.getDouble("COSTO");
 				double precio = rs.getDouble("PRECIO");
-				Long id = rs.getLong("ID_RESTAURANTE");
+				String id = rs.getString("NOMBRE_RESTAURANTE");
 				menus.add(new Menu(idMenu, costo, precio, id));
 			}	
 			conn.commit();
@@ -122,7 +122,7 @@ public class DAOTablaMenu
 				Long idMenu = rs.getLong("ID");
 				double costo = rs.getDouble("COSTO");
 				double precio = rs.getDouble("PRECIO");
-				Long id = rs.getLong("ID_RESTAURANTE");
+				String id = rs.getString("NOMBRE_RESTAURANTE");
 				menus.add(new Menu(idMenu, costo, precio, id));
 			}	
 			conn.commit();
@@ -144,12 +144,12 @@ public class DAOTablaMenu
 	
 	public void actualizarMenu(Connection conn, Menu menu)
 	{
-		String sql = "UPDATE MENU SET COSTO = ?, PRECIO = ?, ID_RESTAURANTE = ? WHERE ID = ?";
+		String sql = "UPDATE MENU SET COSTO = ?, PRECIO = ?, NOMBRE_RESTAURANTE = ? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setDouble(1, menu.getCosto());
 			preStat.setDouble(2, menu.getPrecio());
-			preStat.setLong(3, menu.getIdRestaurante());
+			preStat.setString(3, menu.getNombreRestaurante());
 			preStat.setLong(4, menu.getIdMenu());
 			preStat.executeQuery();
 			conn.commit();

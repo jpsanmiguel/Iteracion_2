@@ -48,14 +48,14 @@ public class RESTRestaurante
 	}
 		
 	@GET
-	@Path( "{id: \\d+}" )
+	@Path( "{username: [a-zA-Z][a-zA-Z_0-9]}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darRestauranteId( @PathParam( "id" ) Long id )
+	public Response darRestauranteNombre( @PathParam( "username" ) String id )
 	{
 		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
 		try
 		{
-			Restaurante restaurante = tm.darRestaurantePorId(id);
+			Restaurante restaurante = tm.darRestaurantePorNombre(id);
 			return Response.status( 200 ).entity( restaurante ).build( );			
 		}
 		catch( Exception e )
@@ -64,22 +64,22 @@ public class RESTRestaurante
 		}
 	}
 	
-	@GET
-	@Path( "{nombre}" )
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darRestauranteNombre( @PathParam( "nombre" ) String nombre )
-	{
-		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
-		try
-		{
-			ArrayList<Restaurante> restaurantes = tm.darRestaurantesPorNombre(nombre);
-			return Response.status( 200 ).entity( restaurantes ).build( );			
-		}
-		catch( Exception e )
-		{
-			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
-		}
-	}
+//	@GET
+//	@Path( "{nombre}" )
+//	@Produces( { MediaType.APPLICATION_JSON } )
+//	public Response darRestauranteNombre( @PathParam( "nombre" ) String nombre )
+//	{
+//		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
+//		try
+//		{
+//			ArrayList<Restaurante> restaurantes = tm.darRestaurantesPorNombre(nombre);
+//			return Response.status( 200 ).entity( restaurantes ).build( );			
+//		}
+//		catch( Exception e )
+//		{
+//			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+//		}
+//	}
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })

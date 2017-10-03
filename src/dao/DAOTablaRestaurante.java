@@ -17,16 +17,16 @@ public class DAOTablaRestaurante
 	
 	public void agregarRestaurante(Connection conn, Restaurante restaurante)
 	{
-		String sql = "INSERT INTO RESTAURANTE VALUES (?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO RESTAURANTE VALUES (?,?,?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(1, restaurante.getIdRestaurante());
-			preStat.setString(2, restaurante.getNombre());
-			preStat.setString(3, restaurante.getTipoComida());
-			preStat.setString(4, restaurante.getPagWeb());
-			preStat.setString(5, restaurante.getEncargado());
-			preStat.setLong(6, restaurante.getIdZona());
-			preStat.setLong(7, restaurante.getIdRotonda());
+		
+			preStat.setString(1, restaurante.getNombre());
+			preStat.setString(2, restaurante.getTipoComida());
+			preStat.setString(3, restaurante.getPagWeb());
+			preStat.setString(4, restaurante.getEncargado());
+			preStat.setLong(5, restaurante.getIdZona());
+			preStat.setLong(6, restaurante.getIdRotonda());
 			preStat.executeQuery();
 			conn.commit();
 		}
@@ -44,25 +44,25 @@ public class DAOTablaRestaurante
 		}
 	}
 	
-	public Restaurante darRestaurantePorId(Connection conn, Long id)
+	public Restaurante darRestaurantePorNombre(Connection conn, String nombre)
 	{
 		Restaurante restaurante = null;
-		String sql = "SELECT * FROM RESTAURANTE WHERE ID = ?";
+		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(1, id);
+			preStat.setString(1, nombre);
 			ResultSet rs = preStat.executeQuery();
 			
 			while(rs.next())
 			{
-				Long idRestaurante = rs.getLong("ID");
-				String nombre = rs.getString("NOMBRE");
+				
+				String nombre1 = rs.getString("NOMBRE");
 				String tipoComida = rs.getString("TIPO_COMIDA");
 				String pagWeb = rs.getString("PAGINA_WEB");
 				String encargado = rs.getString("ENCARGADO");
 				Long idZona = rs.getLong("ID_ZONA");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				restaurante = new Restaurante(idRestaurante, nombre, tipoComida, pagWeb, encargado, idZona, idRotonda);
+				restaurante = new Restaurante(nombre1, tipoComida, pagWeb, encargado, idZona, idRotonda);
 			}				
 			conn.commit();
 		}
@@ -80,43 +80,43 @@ public class DAOTablaRestaurante
 		}
 		return restaurante;
 	}
-	
-	public ArrayList<Restaurante> darRestaurantesPorNombre(Connection conn, String nombre)
-	{
-		ArrayList<Restaurante> restaurantes = new ArrayList<>();
-		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE = ?";
-		try(PreparedStatement preStat = conn.prepareStatement(sql))
-		{
-			preStat.setString(1, nombre);
-			ResultSet rs = preStat.executeQuery();
-			
-			while(rs.next())
-			{
-				Long idRestaurante = rs.getLong("ID");
-				String nombre1 = rs.getString("NOMBRE");
-				String tipoComida = rs.getString("TIPO_COMIDA");
-				String pagWeb = rs.getString("PAGINA_WEB");
-				String encargado = rs.getString("ENCARGADO");
-				Long idZona = rs.getLong("ID_ZONA");
-				Long idRotonda = rs.getLong("ID_ROTONDA");
-				restaurantes.add(new Restaurante(idRestaurante, nombre1, tipoComida, pagWeb, encargado, idZona, idRotonda));
-			}	
-			conn.commit();
-		}
-		catch(SQLException e)
-		{
-			try 
-			{
-				conn.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			e.printStackTrace();
-		}
-		return restaurantes;
-	}
+//	
+//	public ArrayList<Restaurante> darRestaurantesPorNombre(Connection conn, String nombre)
+//	{
+//		ArrayList<Restaurante> restaurantes = new ArrayList<>();
+//		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE = ?";
+//		try(PreparedStatement preStat = conn.prepareStatement(sql))
+//		{
+//			preStat.setString(1, nombre);
+//			ResultSet rs = preStat.executeQuery();
+//			
+//			while(rs.next())
+//			{
+//				Long idRestaurante = rs.getLong("ID");
+//				String nombre1 = rs.getString("NOMBRE");
+//				String tipoComida = rs.getString("TIPO_COMIDA");
+//				String pagWeb = rs.getString("PAGINA_WEB");
+//				String encargado = rs.getString("ENCARGADO");
+//				Long idZona = rs.getLong("ID_ZONA");
+//				Long idRotonda = rs.getLong("ID_ROTONDA");
+//				restaurantes.add(new Restaurante(idRestaurante, nombre1, tipoComida, pagWeb, encargado, idZona, idRotonda));
+//			}	
+//			conn.commit();
+//		}
+//		catch(SQLException e)
+//		{
+//			try 
+//			{
+//				conn.rollback();
+//			} catch (SQLException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//
+//			e.printStackTrace();
+//		}
+//		return restaurantes;
+//	}
 	
 	public ArrayList<Restaurante> darRestaurantes(Connection conn)
 	{
@@ -128,14 +128,14 @@ public class DAOTablaRestaurante
 			
 			while(rs.next())
 			{
-				Long idRestaurante = rs.getLong("ID");
+				
 				String nombre = rs.getString("NOMBRE");
 				String tipoComida = rs.getString("TIPO_COMIDA");
 				String pagWeb = rs.getString("PAGINA_WEB");
 				String encargado = rs.getString("ENCARGADO");
 				Long idZona = rs.getLong("ID_ZONA");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				restaurantes.add(new Restaurante(idRestaurante, nombre, tipoComida, pagWeb, encargado, idZona, idRotonda));
+				restaurantes.add(new Restaurante(nombre, tipoComida, pagWeb, encargado, idZona, idRotonda));
 			}	
 			conn.commit();
 		}
@@ -156,13 +156,13 @@ public class DAOTablaRestaurante
 	
 	public void actualizarRestaurante(Connection conn, Restaurante restaurante)
 	{
-		String sql = "UPDATE RESTAURANTE SET NOMBRE = ?, ID_ZONA = ?, ID_ROTONDA = ? WHERE ID = ?";
+		String sql = "UPDATE RESTAURANTE SET PAGWEB= ?, ID_ZONA = ?, ID_ROTONDA = ? WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setString(1, restaurante.getNombre());
+			preStat.setString(1, restaurante.getPagWeb());
 			preStat.setLong(2, restaurante.getIdZona());
 			preStat.setLong(3, restaurante.getIdRotonda());
-			preStat.setLong(4, restaurante.getIdRestaurante());
+			preStat.setString(4, restaurante.getNombre());
 			preStat.executeQuery();
 			conn.commit();
 		}
@@ -182,10 +182,10 @@ public class DAOTablaRestaurante
 	
 	public void eliminarRestaurante(Connection conn, Restaurante restaurante)
 	{
-		String sql = "DELETE FROM RESTAURANTE WHERE ID = ?";
+		String sql = "DELETE FROM RESTAURANTE WHERE Nombre = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
-			preStat.setLong(1, restaurante.getIdRestaurante());
+			preStat.setString(1, restaurante.getNombre());
 			preStat.executeQuery();
 			conn.commit();
 			conn.commit();

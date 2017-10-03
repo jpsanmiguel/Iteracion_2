@@ -2,7 +2,7 @@ package vo;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class Cliente {
+public class AdministradorRestaurante {
 	
 	@JsonProperty(value="cedula")
 	private Long cedula;
@@ -13,18 +13,18 @@ public class Cliente {
 	@JsonProperty(value="correo")
 	private String correo;
 	
-	@JsonProperty(value="idRotonda")
-	private Long idRotonda;
+	@JsonProperty(value="nombreRestaurante")
+	private String nombreRestaurante;
 	
-	public Cliente(@JsonProperty(value="cedula")Long cedula, 
+	public AdministradorRestaurante(@JsonProperty(value="cedula")Long cedula, 
 				   @JsonProperty(value="nombre")String nombre, 
 				   @JsonProperty(value="correo") String correo, 
-				   @JsonProperty(value="idRotonda")Long idRotonda)
+				   @JsonProperty(value="nombreRestaurante")String nombreRestaurante)
 	{
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.correo = correo;
-		this.idRotonda = idRotonda;
+		this.nombreRestaurante = nombreRestaurante;
 	}
 
 	public Long getCedula() {
@@ -50,12 +50,15 @@ public class Cliente {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	
-	public Long getIdRotonda() {
-		return idRotonda;
+
+	public String getNombreRestaurante() {
+		return nombreRestaurante;
 	}
 
-	public void setIdRotonda(Long idRotonda) {
-		this.idRotonda = idRotonda;
+	public void setNombreRestaurante(String nombreRestaurante) {
+		this.nombreRestaurante = nombreRestaurante;
 	}
+	
+	
 }
+

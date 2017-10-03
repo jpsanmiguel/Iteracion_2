@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import dao.DAOTablaCategoria;
@@ -20,6 +21,7 @@ import dao.DAOTablaRestaurante;
 import dao.DAOTablaRotonda;
 import dao.DAOTablaTipo;
 import dao.DAOTablaTipoProducto;
+
 import dao.DAOTablaZona;
 import vo.Categoria;
 import vo.Cliente;
@@ -31,6 +33,7 @@ import vo.Restaurante;
 import vo.Rotonda;
 import vo.Tipo;
 import vo.TipoProducto;
+
 import vo.Zona;
 import vo.Menu;
 import vo.OrdenRestaurante;
@@ -821,13 +824,13 @@ public class RotondAndesMaster
 		}
 	}
 
-	public Restaurante darRestaurantePorId(Long id)
+	public Restaurante darRestaurantePorNombre(String nombre)
 	{
 		Restaurante restaurante = null;
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
 		try(Connection conn = crearConexion())
 		{
-			restaurante = dao.darRestaurantePorId(conn, id);
+			restaurante = dao.darRestaurantePorNombre(conn, nombre);
 		}
 		catch(SQLException e)
 		{
@@ -837,22 +840,22 @@ public class RotondAndesMaster
 		return restaurante;
 	}
 
-	public ArrayList<Restaurante> darRestaurantesPorNombre(String nombre)
-	{
-		ArrayList<Restaurante> restaurantes = new ArrayList<>();
-		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-		try(Connection conn = crearConexion())
-		{
-			restaurantes = dao.darRestaurantesPorNombre(conn, nombre);
-		}
-		catch(SQLException e)
-		{
-			 
-			e.printStackTrace();
-		}
-		return restaurantes;
-	}
-	
+//	public ArrayList<Restaurante> darRestaurantesPorNombre(String nombre)
+//	{
+//		ArrayList<Restaurante> restaurantes = new ArrayList<>();
+//		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+//		try(Connection conn = crearConexion())
+//		{
+//			restaurantes = dao.darRestaurantesPorNombre(conn, nombre);
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//		}
+//		return restaurantes;
+//	}
+//	
 	public ArrayList<Restaurante> darRestaurantes()
 	{
 		ArrayList<Restaurante> restaurantes = new ArrayList<>();
@@ -1420,10 +1423,133 @@ public class RotondAndesMaster
 			e.printStackTrace();
 		}
 	}
-	
-	// ----------------------------------	 Fin metodos Producto	----------------------------------
-	
-	
+
+//	// ----------------------------------	 Fin metodos Producto	----------------------------------
+//	// ----------------------------------	Inicio metodos Usuario	----------------------------------
+//
+//	public void crearUsuario(Usuario us)
+//	{
+//		// TODO Auto-generated method stub
+//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
+//		try(Connection conn = crearConexion())
+//		{
+//			dao.agregarUsuario(conn, us);
+//			conn.commit();
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public Usuario darUsuarioPorCedula(Long cedula) 
+//	
+//	{
+//		
+//		Usuario cliente = null;
+//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
+//		try(Connection conn = crearConexion())
+//		{
+//			cliente = dao.darUsuarioPorCedula(conn, cedula);
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//		}
+//		return cliente;
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	public ArrayList<Usuario> darUsuarioPorNombre(String nombre) 
+//	{
+//		ArrayList<Usuario> cliente = null;
+//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
+//		try(Connection conn = crearConexion())
+//		{
+//			cliente = dao.darUsuariosPorNombre(conn, nombre);
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//		}
+//		return cliente;
+//
+//	}
+//
+//	public Usuario darUsuarioPorCorreo(String correo) {
+//		// TODO Auto-generated method stub
+//		
+//		Usuario cliente = null;
+//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
+//		try(Connection conn = crearConexion())
+//		{
+//			cliente = dao.darUsuarioPorCorreo(conn, correo);
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//		}
+//		return cliente;
+//
+//	}
+//
+//	public List<Usuario> darUsuarios() {
+//		// TODO Auto-generated method stub
+//		
+//		ArrayList<Usuario> cliente = null;
+//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
+//		try(Connection conn = crearConexion())
+//		{
+//			cliente = dao.darUsuarios(conn);
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//		}
+//		return cliente;
+//
+//	}
+//
+//	public void eliminarUsuario(Usuario cliente) 
+//	{
+//		// TODO Auto-generated method stub
+//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
+//		try(Connection conn = crearConexion())
+//		{
+//			dao.eliminarUsuario(conn, cliente);
+//			conn.commit();
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//		}	
+//	}
+//
+//	public void actualizarUsuario(Usuario cliente) 
+//	{
+//		// TODO Auto-generated method stub
+//		DAOTablaUsuarios dao = new DAOTablaUsuarios();
+//	try(Connection conn = crearConexion())
+//		{
+//			dao.actualizarUsuario(conn, cliente);
+//			conn.commit();
+//		}
+//		catch(SQLException e)
+//		{
+//			 
+//			e.printStackTrace();
+//	}	
+//	}
+//	
+//	// ----------------------------------	 Fin metodos Producto	----------------------------------
+//	
 
 	
 }

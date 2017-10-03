@@ -5,8 +5,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class Restaurante 
 {
 
-	@JsonProperty(value="idRestaurante")
-	private Long idRestaurante;
 	
 	@JsonProperty(value="nombre")
 	private String nombre;
@@ -26,14 +24,14 @@ public class Restaurante
 	@JsonProperty(value="idRotonda")
 	private Long idRotonda;
 
-	public Restaurante(@JsonProperty(value="idRestaurante")Long idRestaurante, 
+	public Restaurante(
 					   @JsonProperty(value="nombre")String nombre, 
 					   @JsonProperty(value="tipoComida")String tipoComida, 
 					   @JsonProperty(value="pagWeb")String pagWeb, 
 					   @JsonProperty(value="encargado")String encargado, 
 					   @JsonProperty(value="idZona")Long idZona, 
 					   @JsonProperty(value="idRotonda")Long idRotonda) {
-		this.idRestaurante = idRestaurante;
+	
 		this.nombre = nombre;
 		this.tipoComida = tipoComida;
 		this.pagWeb = pagWeb;
@@ -42,14 +40,7 @@ public class Restaurante
 		this.idRotonda = idRotonda;
 	}
 
-	public Long getIdRestaurante() {
-		return idRestaurante;
-	}
-
-	public void setIdRestaurante(Long idRestaurante) {
-		this.idRestaurante = idRestaurante;
-	}
-
+	
 	public String getNombre() {
 		return nombre;
 	}

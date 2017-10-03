@@ -13,19 +13,19 @@ public class Menu {
 	@JsonProperty(value="precio")
 	private double precio;
 	
-	@JsonProperty(value="idRestaurante")
-	private Long idRestaurante;
+	@JsonProperty(value="nombreRestaurante")
+	private String nombreRestaurante;
 
 	
 	
 	public Menu(@JsonProperty(value="idMenu")Long idMenu,
 				@JsonProperty(value="costo") double costo, 
 				@JsonProperty(value="precio")double precio, 
-				@JsonProperty(value="idRestaurante")Long idRestaurante) {
+				@JsonProperty(value= "nombreRestaurante")String nombreRestaurante) {
 		this.idMenu = idMenu;
 		this.costo = costo;
 		this.precio = precio;
-		this.idRestaurante = idRestaurante;
+		this.nombreRestaurante = nombreRestaurante;
 	}
 
 	public Long getIdMenu() {
@@ -36,12 +36,14 @@ public class Menu {
 		this.idMenu = idMenu;
 	}
 
-	public Long getIdRestaurante() {
-		return idRestaurante;
+	
+
+	public String getNombreRestaurante() {
+		return nombreRestaurante;
 	}
 
-	public void setIdRestaurante(Long idRestaurante) {
-		this.idRestaurante = idRestaurante;
+	public void setNombreRestaurante(String nombreRestaurante) {
+		this.nombreRestaurante = nombreRestaurante;
 	}
 
 	public double getCosto() {

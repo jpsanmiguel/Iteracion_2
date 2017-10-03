@@ -6,18 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import vo.AdministradorRotonda;
 import vo.Cliente;
 
-public class DAOTablaCliente 
+public class DAOTablaAdministradorRotonda
 {
-	public DAOTablaCliente()
+	public DAOTablaAdministradorRotonda()
 	{
 		
 	}
 	
-	public void agregarCliente(Connection conn, Cliente cliente)
+	public void agregarCliente(Connection conn, AdministradorRotonda cliente)
 	{
-		String sql = "INSERT INTO CLIENTE VALUES (?,?,?,?)";
+		String sql = "INSERT INTO ADMINISTRADORROTONDA VALUES (?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setLong(1, cliente.getCedula());
@@ -41,10 +42,10 @@ public class DAOTablaCliente
 		}
 	}
 	
-	public Cliente darClientePorCedula(Connection conn, Long cedula)
+	public AdministradorRotonda darClientePorCedula(Connection conn, Long cedula)
 	{
-		Cliente cliente = null;
-		String sql = "SELECT * FROM CLIENTE WHERE CEDULA = ?";
+		AdministradorRotonda cliente = null;
+		String sql = "SELECT * FROM ADMINISTRADORROTONDA WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setLong(1, cedula);
@@ -56,7 +57,7 @@ public class DAOTablaCliente
 				String nombre = rs.getString("NOMBRE");
 				String correo = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				cliente = new Cliente(cedula1, nombre, correo, idRotonda);
+				cliente = new AdministradorRotonda(cedula1, nombre, correo, idRotonda);
 			}		
 			conn.commit();
 		}
@@ -76,10 +77,11 @@ public class DAOTablaCliente
 	}
 	
 	
-	public Cliente darClientePorCorreo(Connection conn, String correo)
+	public AdministradorRotonda darClientePorCorreo(Connection conn, String correo)
 	{
-		Cliente cliente = null;
-		String sql = "SELECT * FROM CLIENTE WHERE CORREO = ?";
+
+AdministradorRotonda cliente = null;
+		String sql = "SELECT * FROM ADMINISTRADORROTONDA WHERE CORREO = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setString(1, correo);
@@ -91,7 +93,7 @@ public class DAOTablaCliente
 				String nombre = rs.getString("NOMBRE");
 				String correo1 = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				cliente = new Cliente(cedula1, nombre, correo1, idRotonda);
+				cliente = new AdministradorRotonda(cedula1, nombre, correo1, idRotonda);
 			}
 			conn.commit();
 		}
@@ -111,10 +113,10 @@ public class DAOTablaCliente
 	}
 	
 	
-	public ArrayList<Cliente> darClientesPorNombre(Connection conn, String nombre)
+	public ArrayList<AdministradorRotonda> darClientesPorNombre(Connection conn, String nombre)
 	{
-		ArrayList<Cliente> clientes = new ArrayList<>();
-		String sql = "SELECT * FROM CLIENTE WHERE NOMBRE = ?";
+		ArrayList<AdministradorRotonda> clientes = new ArrayList<>();
+		String sql = "SELECT * FROM ADMINISTRADORROTONDA WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setString(1, nombre);
@@ -126,7 +128,7 @@ public class DAOTablaCliente
 				String nombre1 = rs.getString("NOMBRE");
 				String correo = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				clientes.add(new Cliente(cedula, nombre1, correo, idRotonda));
+				clientes.add(new AdministradorRotonda(cedula, nombre1, correo, idRotonda));
 			}
 			conn.commit();
 		}
@@ -145,10 +147,10 @@ public class DAOTablaCliente
 		return clientes;
 	}
 	
-	public ArrayList<Cliente> darClientes(Connection conn)
+	public ArrayList<AdministradorRotonda> darClientes(Connection conn)
 	{
-		ArrayList<Cliente> clientes = new ArrayList<>();
-		String sql = "SELECT * FROM CLIENTE";
+		ArrayList<AdministradorRotonda> clientes = new ArrayList<>();
+		String sql = "SELECT * FROM ADMINISTRADORROTONDA";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			ResultSet rs = preStat.executeQuery();
@@ -159,7 +161,7 @@ public class DAOTablaCliente
 				String nombre1 = rs.getString("NOMBRE");
 				String correo = rs.getString("CORREO");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				clientes.add(new Cliente(cedula, nombre1, correo, idRotonda));
+				clientes.add(new AdministradorRotonda(cedula, nombre1, correo, idRotonda));
 			}
 			conn.commit();
 		}
@@ -178,9 +180,9 @@ public class DAOTablaCliente
 		return clientes;
 	}
 	
-	public void actualizarCliente(Connection conn, Cliente cliente)
+	public void actualizarCliente(Connection conn, AdministradorRotonda cliente)
 	{
-		String sql = "UPDATE CLIENTE SET NOMBRE = ?, CORREO = ?, ID_ROTONDA = ? WHERE CEDULA = ?";
+		String sql = "UPDATE ADMINISTRADORROTONDA SET NOMBRE = ?, CORREO = ?, ID_ROTONDA = ? WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setString(1,  cliente.getNombre());
@@ -204,9 +206,9 @@ public class DAOTablaCliente
 		}
 	}
 	
-	public void eliminarCliente(Connection conn, Cliente cliente)
+	public void eliminarCliente(Connection conn, AdministradorRotonda cliente)
 	{
-		String sql = "DELETE FROM CLIENTE WHERE CEDULA = ?";
+		String sql = "DELETE FROM ADMINISTRADORROTONDA WHERE CEDULA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setLong(1, cliente.getCedula());
