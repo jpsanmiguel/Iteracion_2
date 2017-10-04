@@ -17,7 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
+import vo.AdministradorRestaurante;
 import vo.AdministradorRotonda;
+import vo.Cliente;
+import vo.Restaurante;
+import vo.Zona;
 
 
 @Path("administradorrotonda")
@@ -47,6 +51,67 @@ public class RESTAdministradorRotonda
 		return Response.status(200).entity(cliente).build();
 	}
 		
+	@POST
+	@Path("/cli")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearCliente(Cliente atraco) 
+	{
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearCliente(atraco);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(atraco).build();
+	}
+	
+	
+	@POST
+	@Path("/adminrestaurante")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearRestaurante(AdministradorRestaurante atraco) 
+	{
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearAdministradorRestaurante(atraco);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(atraco).build();
+	}
+	
+	
+	@POST
+	@Path("/restaurante")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearRestaurante(Restaurante atraco) 
+	{
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearRestaurante(atraco);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(atraco).build();
+	}
+
+	@POST
+	@Path("/nuevazona")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearZona(Zona atraco) 
+	{
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearZona(atraco);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(atraco).build();
+	}
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
@@ -136,5 +201,7 @@ public class RESTAdministradorRotonda
 		}
 		return Response.status(200).entity(cliente).build();
 	}
+	
+	
 	
 }

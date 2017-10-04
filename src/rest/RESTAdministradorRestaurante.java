@@ -18,6 +18,9 @@ import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
 import vo.AdministradorRestaurante;
+import vo.Ingrediente;
+import vo.Menu;
+import vo.Producto;
 
 
 @Path("administradorrestaurante")
@@ -41,6 +44,47 @@ public class RESTAdministradorRestaurante
 		RotondAndesMaster tm = new RotondAndesMaster(getPath());
 		try {
 			tm.crearAdministradorRestaurante(cliente);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(cliente).build();
+	}
+	
+	@POST
+	@Path("/product")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearProducto(Producto cliente) {
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearProducto(cliente);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(cliente).build();
+	}
+	
+	@POST
+	@Path("/ingredient")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearIngrediente(Ingrediente cliente) {
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearIngrediente(cliente);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(cliente).build();
+	}
+	@POST
+	@Path("/men")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearMenu(Menu cliente) {
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearMenu(cliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

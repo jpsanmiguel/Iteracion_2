@@ -4,7 +4,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class PreferenciaCliente 
 {
-	@JsonProperty(value="icCliente")
+	@JsonProperty(value="idCliente")
 	private Long idCliente;
 
 	@JsonProperty(value="preferencia")

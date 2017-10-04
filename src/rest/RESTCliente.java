@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
 import vo.Cliente;
+import vo.PreferenciaCliente;
 
 
 @Path("clientes")
@@ -46,7 +47,35 @@ public class RESTCliente
 		}
 		return Response.status(200).entity(cliente).build();
 	}
-		
+	
+	
+	@POST
+	@Path("/preferences")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearPreferencia(PreferenciaCliente cliente) {
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.crearPreferenciaCliente(cliente);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(cliente).build();
+	}
+	
+	@PUT
+	@Path("/preferences")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response actualizarPreferencia(PreferenciaCliente cliente) {
+		RotondAndesMaster tm = new RotondAndesMaster(getPath());
+		try {
+			tm.actualizarPreferenciaCliente(cliente);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(cliente).build();
+	}
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )

@@ -63,23 +63,23 @@ public class RESTOrdenRestaurante
 			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
 		}
 	}
-	
-	@GET
-	@Path( "{idMenu: \\d+}" )
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response darOrdenRestauranteNombre( @PathParam( "idMenu" ) Long idMenu )
-	{
-		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
-		try
-		{
-			ArrayList<OrdenRestaurante> ordenRestaurantes = tm.darOrdenRestaurantePorMenu(idMenu);
-			return Response.status( 200 ).entity( ordenRestaurantes ).build( );			
-		}
-		catch( Exception e )
-		{
-			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
-		}
-	}
+//	
+//	@GET
+//	@Path( "{idMenu: \\d+}" )
+//	@Produces( { MediaType.APPLICATION_JSON } )
+//	public Response darOrdenRestauranteNombre( @PathParam( "idMenu" ) Long idMenu )
+//	{
+//		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
+//		try
+//		{
+//			ArrayList<OrdenRestaurante> ordenRestaurantes = tm.darOrdenRestaurantePorMenu(idMenu);
+//			return Response.status( 200 ).entity( ordenRestaurantes ).build( );			
+//		}
+//		catch( Exception e )
+//		{
+//			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+//		}
+//	}
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
