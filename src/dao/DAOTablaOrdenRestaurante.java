@@ -78,6 +78,40 @@ public class DAOTablaOrdenRestaurante
 		return ordenRestaurante;
 	}
 	
+	public ArrayList<OrdenRestaurante> darOrdenRestaurantesPorIdCliente(Connection conn, Long idMenu)
+	{
+		ArrayList<OrdenRestaurante> ordenRestaurantes = new ArrayList<>();
+		String sql = "SELECT * FROM ORDEN_RESTAURANTE WHERE ID_CLIENTE = ?";
+		try(PreparedStatement preStat = conn.prepareStatement(sql))
+		{
+			preStat.setLong(1, idMenu);
+			ResultSet rs = preStat.executeQuery();
+			
+			while(rs.next())
+			{
+				Long id = rs.getLong("ID");
+				Date fecha = rs.getDate("FECHA");
+				Long idMenu1 = rs.getLong("ID_MENU");
+				Long idRotonda = rs.getLong("ID_ROTONDA");
+				Long idCliente = rs.getLong("ID_CLIENTE");
+				ordenRestaurantes.add(new OrdenRestaurante(id, fecha, idMenu1, idRotonda, idCliente));
+			}	
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		}
+		return ordenRestaurantes;
+	}
 	
 	public ArrayList<OrdenRestaurante> darOrdenRestaurantesPorMenu(Connection conn, Long idMenu)
 	{

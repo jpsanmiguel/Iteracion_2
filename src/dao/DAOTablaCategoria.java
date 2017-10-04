@@ -98,12 +98,15 @@ public class DAOTablaCategoria {
 		return categorias;
 	}
 
-	public ArrayList<Categoria> darCategorias(Connection conn)
+	public ArrayList<Categoria> darCategorias(Connection conn) throws SQLException
 	{
 		ArrayList<Categoria> categorias = new ArrayList<>();
-		String sql = "SELECT * FROM CATEGORIA";
-		try(PreparedStatement preStat = conn.prepareStatement(sql))
-		{
+		String sql = "SELECT * FROM ISIS2304A331720.CATEGORIA";
+//		try(PreparedStatement preStat = conn.prepareStatement(sql))
+//		{
+//			
+//		}
+		PreparedStatement preStat = conn.prepareStatement(sql);
 			ResultSet rs = preStat.executeQuery();
 			while(rs.next())
 			{
@@ -111,19 +114,19 @@ public class DAOTablaCategoria {
 				String nombre = rs.getString("NOMBRE");
 				categorias.add(new Categoria(id, nombre));
 			}
-			conn.commit();
-		}
-		catch(SQLException e)
-		{
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			e.printStackTrace();
-		}
+//			conn.commit();
+//		}
+//		catch(SQLException e)
+//		{
+//			try {
+//				conn.rollback();
+//			} catch (SQLException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//
+//			e.printStackTrace();
+//		}
 		return categorias;
 	}
 

@@ -51,41 +51,117 @@ import vo.PreferenciaCliente;
 
 public class RotondAndesMaster 
 {
-	private static final String CONNECTION_DATA_FILE_NAME_REMOTE = "\\conexion.properties";
+//	private static final String CONNECTION_DATA_FILE_NAME_REMOTE = "/conexion.properties";
+//
+//	private String url;
+//
+//	private String user;
+//
+//	private String password;
+//
+//	private String driver;
+//	
+//	/**
+//	 * conexion a la base de datos
+//	 */
+//	private Connection conn;
+//
+//	public RotondAndesMaster(String path)
+//	{
+//		connectionData(path);
+//	}
+//
+//	private Connection darConexion() throws SQLException
+//	{
+//		return DriverManager.getConnection(url, user, password);
+//	}
+//
+//	private void connectionData(String path) 
+//	{	try
+//		{
+//			File arch = new File(path + CONNECTION_DATA_FILE_NAME_REMOTE);
+//			Properties prop = new Properties();
+//			FileInputStream in = new FileInputStream(arch);
+//			prop.load(in);
+//			in.close();
+//			url = prop.getProperty("url");
+//			user = prop.getProperty("usuario");
+//			password = prop.getProperty("clave");
+//			driver = prop.getProperty("driver");
+//			Class.forName(driver);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	/**
+	 * Path relativo del archivo con los datos de la conexión
+	 */
+	private static final String CONNECTION_DATA_FILE_NAME_REMOTE = "/conexion.properties";
 
-	private String url;
-
+	/**
+	 * Path absoluto de la conexión
+	 */
+	private  String connectionDataPath;
+	/**
+	 * Usuario con el que se va a conectar a la BD
+	 */
 	private String user;
-
+	/**
+	 * Constraseña con la que se va a conectar a la BD
+	 */
 	private String password;
-
+	/**
+	 * URL que se va a utilizar para conectarse a la BD
+	 */
+	private String url;
+	/**
+	 * Driver que se va a utilizar para conectarse a la BD
+	 */
 	private String driver;
+	/**
+	 * Conexión a la BD
+	 */
+	private Connection conn;
 
-	public RotondAndesMaster(String path)
-	{
-		connectionData(path);
+	/**
+	 * Método constructor. Inicializa y modela las transacciones que se
+	 * llevarán a cabo.
+	 * @param contextPathP, path absoluto en el servidor del contexto del deploy actual
+	 */
+	public RotondAndesMaster(String contextPathP) {
+		connectionDataPath = contextPathP + CONNECTION_DATA_FILE_NAME_REMOTE;
+		initConnectionData();
 	}
 
-	private Connection crearConexion() throws SQLException
-	{
-		return DriverManager.getConnection(url, user, password);
-	}
-
-	private void connectionData(String path) 
-	{
-		File arch = new File(path + CONNECTION_DATA_FILE_NAME_REMOTE);
-		Properties prop = new Properties();
-		try(FileInputStream in = new FileInputStream(arch))
-		{
+	/**
+	 * Inicializa la conexión a la BD leyendo el archivo con las propiedades
+	 */
+	private void initConnectionData() {
+		try {
+			File arch = new File(this.connectionDataPath);
+			Properties prop = new Properties();
+			FileInputStream in = new FileInputStream(arch);
 			prop.load(in);
-			url = prop.getProperty("url");
-			user = prop.getProperty("usuario");
-			password = prop.getProperty("clave");
-			driver = prop.getProperty("driver");
+			in.close();
+			this.url = prop.getProperty("url");
+			this.user = prop.getProperty("usuario");
+			this.password = prop.getProperty("clave");
+			this.driver = prop.getProperty("driver");
 			Class.forName(driver);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Retorna el objeto que modela la conexión a la BD
+	 * @return la conexión
+	 * @throws SQLException
+	 */
+	private Connection darConexion() throws SQLException {
+		System.out.println("Connecting to: " + url + " With user: " + user);
+		return DriverManager.getConnection(url, user, password);
 	}
 
 	// ----------------------------------  Inicio metodos Categoria	----------------------------------
@@ -95,7 +171,7 @@ public class RotondAndesMaster
 	public void crearCategoria(Categoria categoria)
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarCategoria(conn, categoria);
 			conn.commit();
@@ -111,7 +187,7 @@ public class RotondAndesMaster
 	{
 		Categoria categoria = null;
 		DAOTablaCategoria dao = new DAOTablaCategoria();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			categoria = dao.darCategoriaPorId(conn, id);
 		}
@@ -127,7 +203,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Categoria> categorias = new ArrayList<>();
 		DAOTablaCategoria dao = new DAOTablaCategoria();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			categorias = dao.darCategoriasPorNombre(conn, nombre);
 		}
@@ -143,7 +219,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Categoria> categorias = new ArrayList<>();
 		DAOTablaCategoria dao = new DAOTablaCategoria();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			categorias = dao.darCategorias(conn);
 		}
@@ -158,7 +234,7 @@ public class RotondAndesMaster
 	public void actualizarCategoria(Categoria categoria)
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarCategoria(conn, categoria);
 			conn.commit();
@@ -173,7 +249,7 @@ public class RotondAndesMaster
 	public void eliminarCategoria(Categoria categoria)
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarCategoria(conn, categoria);
 			conn.commit();
@@ -194,7 +270,7 @@ public class RotondAndesMaster
 	public void crearCliente(Cliente cliente)
 	{
 		DAOTablaCliente dao = new DAOTablaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarCliente(conn, cliente);
 			conn.commit();
@@ -210,7 +286,7 @@ public class RotondAndesMaster
 	{
 		Cliente cliente = null;
 		DAOTablaCliente dao = new DAOTablaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darClientePorCedula(conn, cedula);
 		}
@@ -226,7 +302,7 @@ public class RotondAndesMaster
 	{
 		Cliente cliente = null;
 		DAOTablaCliente dao = new DAOTablaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darClientePorCorreo(conn, correo);
 		}
@@ -242,7 +318,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Cliente> cliente = null;
 		DAOTablaCliente dao = new DAOTablaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darClientesPorNombre(conn, nombre);
 		}
@@ -258,7 +334,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Cliente> cliente = null;
 		DAOTablaCliente dao = new DAOTablaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darClientes(conn);
 		}
@@ -273,7 +349,7 @@ public class RotondAndesMaster
 	public void actualizarCliente(Cliente cliente)
 	{
 		DAOTablaCliente dao = new DAOTablaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarCliente(conn, cliente);
 			conn.commit();
@@ -288,7 +364,7 @@ public class RotondAndesMaster
 	public void eliminarCliente(Cliente cliente)
 	{
 		DAOTablaCliente dao = new DAOTablaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarCliente(conn, cliente);
 			conn.commit();
@@ -307,7 +383,7 @@ public class RotondAndesMaster
 	public void crearIngrediente(Ingrediente ingrediente)
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarIngrediente(conn, ingrediente);
 			conn.commit();
@@ -323,7 +399,7 @@ public class RotondAndesMaster
 	{
 		Ingrediente ingrediente = null;
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ingrediente = dao.darIngredientePorId(conn, id);
 		}
@@ -339,7 +415,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Ingrediente> ingredientes = new ArrayList<>();
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ingredientes = dao.darIngredientesPorNombre(conn, nombre);
 		}
@@ -355,7 +431,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Ingrediente> ingredientes = new ArrayList<>();
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ingredientes = dao.darIngredientes(conn);
 		}
@@ -370,7 +446,7 @@ public class RotondAndesMaster
 	public void actualizarIngrediente(Ingrediente ingrediente)
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarIngrediente(conn, ingrediente);
 			conn.commit();
@@ -385,7 +461,7 @@ public class RotondAndesMaster
 	public void eliminarIngrediente(Ingrediente ingrediente)
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarIngrediente(conn, ingrediente);
 			conn.commit();
@@ -405,7 +481,7 @@ public class RotondAndesMaster
 	public void crearIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarIngredienteProducto(conn, ingredienteProducto);
 			conn.commit();
@@ -421,7 +497,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<IngredienteProducto> ingredientesProductos = new ArrayList<>();
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ingredientesProductos = dao.darIngredientesProductosPorIdIngrediente(conn, idIngrediente);
 		} 
@@ -437,7 +513,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<IngredienteProducto> ingredientesProductos = new ArrayList<>();
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ingredientesProductos = dao.darIngredientesProductosPorIdProducto(conn, idProducto);
 		} 
@@ -453,7 +529,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<IngredienteProducto> ingredientesProductos = new ArrayList<>();
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ingredientesProductos = dao.darIngredientesProductos(conn);
 		} 
@@ -468,7 +544,7 @@ public class RotondAndesMaster
 	public void actualizarProductoDeIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarProductoDeIngredienteProducto(conn, ingredienteProducto);
 			conn.commit();
@@ -483,7 +559,7 @@ public class RotondAndesMaster
 	public void actualizarIngredienteDeIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarIngredienteDeIngredienteProducto(conn, ingredienteProducto);
 			conn.commit();
@@ -498,7 +574,7 @@ public class RotondAndesMaster
 	public void eliminarIngredienteProducto(IngredienteProducto ingredienteProducto)
 	{
 		DAOTablaIngredienteProducto dao = new DAOTablaIngredienteProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarIngredienteProducto(conn, ingredienteProducto);
 			conn.commit();
@@ -517,7 +593,7 @@ public class RotondAndesMaster
 	public void crearMenu(Menu menu)
 	{
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarMenu(conn, menu);
 			conn.commit();
@@ -533,7 +609,7 @@ public class RotondAndesMaster
 	{
 		Menu menu = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menu = dao.darMenuPorId(conn, id);
 		} 
@@ -549,7 +625,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Menu> menus = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menus = dao.darMenusPorRestaurante(conn, idRestaurante);
 		} 
@@ -565,7 +641,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Menu> menus = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menus = dao.darMenusPorPostre(conn, idRestaurante);
 		} 
@@ -581,7 +657,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Menu> menus = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menus = dao.darMenusPorEntrada(conn, idRestaurante);
 		} 
@@ -597,7 +673,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Menu> menus = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menus = dao.darMenusPorPlatoFuerte(conn, idRestaurante);
 		} 
@@ -612,7 +688,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Menu> menus = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menus = dao.darMenusPorAcompaniamiento(conn, idRestaurante);
 		} 
@@ -627,7 +703,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Menu> menus = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menus = dao.darMenusPorBebida(conn, idRestaurante);
 		} 
@@ -642,7 +718,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Menu> menus = null;
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			menus = dao.darMenus(conn);
 		} 
@@ -657,7 +733,7 @@ public class RotondAndesMaster
 	public void actualizarMenu(Menu menu)
 	{
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarMenu(conn, menu);
 		} 
@@ -671,7 +747,7 @@ public class RotondAndesMaster
 	public void eliminarMenu(Menu menu)
 	{
 		DAOTablaMenu dao = new DAOTablaMenu();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarMenu(conn, menu);
 		} 
@@ -689,7 +765,7 @@ public class RotondAndesMaster
 	public void crearOrdenRestaurante(OrdenRestaurante ordenRestaurante)
 	{
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarOrdenRestaurante(conn, ordenRestaurante);
 			conn.commit();
@@ -705,7 +781,7 @@ public class RotondAndesMaster
 	{
 		OrdenRestaurante ordenRestaurante = null;
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ordenRestaurante = dao.darOrdenRestaurantePorId(conn, id);
 		}
@@ -717,11 +793,26 @@ public class RotondAndesMaster
 		return ordenRestaurante;		
 	}
 
+	public ArrayList<OrdenRestaurante> darOrdenRestaurantePorIdCliente(Long idMenu)
+	{
+		ArrayList<OrdenRestaurante> ordenRestaurantes = new ArrayList<>();
+		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
+		try(Connection conn = darConexion())
+		{
+			ordenRestaurantes = dao.darOrdenRestaurantesPorIdCliente(conn, idMenu);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return ordenRestaurantes;		
+	}
 	public ArrayList<OrdenRestaurante> darOrdenRestaurantePorMenu(Long idMenu)
 	{
 		ArrayList<OrdenRestaurante> ordenRestaurantes = new ArrayList<>();
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ordenRestaurantes = dao.darOrdenRestaurantesPorMenu(conn, idMenu);
 		}
@@ -737,7 +828,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<OrdenRestaurante> ordenRestaurantes = new ArrayList<>();
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			ordenRestaurantes = dao.darOrdenRestaurantes(conn);
 		}
@@ -752,7 +843,7 @@ public class RotondAndesMaster
 	public void actualizarOrdenRestaurante(OrdenRestaurante ordenRestaurante)
 	{
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarOrdenRestaurante(conn, ordenRestaurante);
 			conn.commit();
@@ -767,7 +858,7 @@ public class RotondAndesMaster
 	public void eliminarOrdenRestaurante(OrdenRestaurante ordenRestaurante)
 	{
 		DAOTablaOrdenRestaurante dao = new DAOTablaOrdenRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarOrdenRestaurante(conn, ordenRestaurante);
 			conn.commit();
@@ -786,7 +877,7 @@ public class RotondAndesMaster
 	public void crearReserva(Reserva reserva)
 	{
 		DAOTablaReserva dao = new DAOTablaReserva();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarReserva(conn, reserva);
 			conn.commit();
@@ -802,7 +893,7 @@ public class RotondAndesMaster
 	{
 		Reserva reserva = null;
 		DAOTablaReserva dao = new DAOTablaReserva();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reserva = dao.darReservaPorId(conn, id);
 		}
@@ -818,7 +909,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Reserva> reservas = null;
 		DAOTablaReserva dao = new DAOTablaReserva();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reservas = dao.darReservasPorCliente(conn, idCliente);
 		}
@@ -834,7 +925,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Reserva> reserva = null;
 		DAOTablaReserva dao = new DAOTablaReserva();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reserva = dao.darReservasPorZona(conn, idZona);
 		}
@@ -850,7 +941,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Reserva> reserva = null;
 		DAOTablaReserva dao = new DAOTablaReserva();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reserva = dao.darReservas(conn);
 		}
@@ -865,7 +956,7 @@ public class RotondAndesMaster
 	public void actualizarReserva(Reserva reserva)
 	{
 		DAOTablaReserva dao = new DAOTablaReserva();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarReserva(conn, reserva);
 			conn.commit();
@@ -880,7 +971,7 @@ public class RotondAndesMaster
 	public void eliminarReserva(Reserva reserva)
 	{
 		DAOTablaReserva dao = new DAOTablaReserva();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarReserva(conn, reserva);
 			conn.commit();
@@ -900,7 +991,7 @@ public class RotondAndesMaster
 	public void crearRestaurante(Restaurante restaurante)
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarRestaurante(conn, restaurante);
 			conn.commit();
@@ -916,7 +1007,7 @@ public class RotondAndesMaster
 	{
 		Restaurante restaurante = null;
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			restaurante = dao.darRestaurantePorNombre(conn, nombre);
 		}
@@ -932,7 +1023,7 @@ public class RotondAndesMaster
 	//	{
 	//		ArrayList<Restaurante> restaurantes = new ArrayList<>();
 	//		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-	//		try(Connection conn = crearConexion())
+	//		try(Connection conn = darConexion())
 	//		{
 	//			restaurantes = dao.darRestaurantesPorNombre(conn, nombre);
 	//		}
@@ -948,7 +1039,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Restaurante> restaurantes = new ArrayList<>();
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			restaurantes = dao.darRestaurantes(conn);
 		}
@@ -967,7 +1058,7 @@ public class RotondAndesMaster
 	public void actualizarRestaurante(Restaurante restaurante)
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarRestaurante(conn, restaurante);
 			conn.commit();
@@ -982,7 +1073,7 @@ public class RotondAndesMaster
 	public void eliminarRestaurante(Restaurante restaurante)
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarRestaurante(conn, restaurante);
 			conn.commit();
@@ -1001,7 +1092,7 @@ public class RotondAndesMaster
 	public void crearTipo(Tipo tipo)
 	{
 		DAOTablaTipo dao = new DAOTablaTipo();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarTipo(conn, tipo);
 			conn.commit();
@@ -1017,7 +1108,7 @@ public class RotondAndesMaster
 	{
 		Tipo tipo = null;
 		DAOTablaTipo dao = new DAOTablaTipo();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			tipo = dao.darTipoPorId(conn, id);
 		}
@@ -1033,7 +1124,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Tipo> tipos = new ArrayList<>();
 		DAOTablaTipo dao = new DAOTablaTipo();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			tipos = dao.darTiposPorNombre(conn, nombre);
 		}
@@ -1049,7 +1140,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Tipo> tipos = new ArrayList<>();
 		DAOTablaTipo dao = new DAOTablaTipo();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			tipos = dao.darTipos(conn);
 		}
@@ -1068,7 +1159,7 @@ public class RotondAndesMaster
 	public void actualizarTipo(Tipo tipo)
 	{
 		DAOTablaTipo dao = new DAOTablaTipo();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarTipo(conn, tipo);
 			conn.commit();
@@ -1083,7 +1174,7 @@ public class RotondAndesMaster
 	public void eliminarTipo(Tipo tipo)
 	{
 		DAOTablaTipo dao = new DAOTablaTipo();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarTipo(conn, tipo);
 			conn.commit();
@@ -1102,7 +1193,7 @@ public class RotondAndesMaster
 	public void crearTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarTipoProducto(conn, tipoProducto);
 			conn.commit();
@@ -1118,7 +1209,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<TipoProducto> tiposProductos = new ArrayList<>();
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			tiposProductos = dao.darTiposProductosPorIdTipo(conn, idTipo);
 		} 
@@ -1134,7 +1225,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<TipoProducto> tiposProductos = new ArrayList<>();
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			tiposProductos = dao.darTiposProductosPorIdProducto(conn, idProducto);
 		} 
@@ -1150,7 +1241,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<TipoProducto> tiposProductos = new ArrayList<>();
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			tiposProductos = dao.darTiposProductos(conn);
 		} 
@@ -1165,7 +1256,7 @@ public class RotondAndesMaster
 	public void actualizarProductoDeTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarProductoTipoProducto(conn, tipoProducto);
 			conn.commit();
@@ -1180,7 +1271,7 @@ public class RotondAndesMaster
 	public void actualizarTipoDeTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarTipoTipoProducto(conn, tipoProducto);
 			conn.commit();
@@ -1195,7 +1286,7 @@ public class RotondAndesMaster
 	public void eliminarTipoProducto(TipoProducto tipoProducto)
 	{
 		DAOTablaTipoProducto dao = new DAOTablaTipoProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarTipoProducto(conn, tipoProducto);
 			conn.commit();
@@ -1214,7 +1305,7 @@ public class RotondAndesMaster
 	public void crearZona(Zona zona)
 	{
 		DAOTablaZona dao = new DAOTablaZona();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarZona(conn, zona);
 			conn.commit();
@@ -1230,7 +1321,7 @@ public class RotondAndesMaster
 	{
 		Zona zona = null;
 		DAOTablaZona dao = new DAOTablaZona();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			zona = dao.darZonaPorId(conn, id);
 		}
@@ -1246,7 +1337,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Zona> zonas = new ArrayList<>();
 		DAOTablaZona dao = new DAOTablaZona();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			zonas = dao.darZonasPorNombre(conn, nombre);
 		}
@@ -1262,7 +1353,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Zona> zonas = new ArrayList<>();
 		DAOTablaZona dao = new DAOTablaZona();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			zonas = dao.darZonas(conn);
 		}
@@ -1281,7 +1372,7 @@ public class RotondAndesMaster
 	public void actualizarZona(Zona zona)
 	{
 		DAOTablaZona dao = new DAOTablaZona();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarZona(conn, zona);
 			conn.commit();
@@ -1296,7 +1387,7 @@ public class RotondAndesMaster
 	public void eliminarZona(Zona zona)
 	{
 		DAOTablaZona dao = new DAOTablaZona();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarZona(conn, zona);
 			conn.commit();
@@ -1316,7 +1407,7 @@ public class RotondAndesMaster
 	public void crearRotonda(Rotonda rotonda)
 	{
 		DAOTablaRotonda dao = new DAOTablaRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarRotonda(conn, rotonda);
 			conn.commit();
@@ -1332,7 +1423,7 @@ public class RotondAndesMaster
 	{
 		Rotonda rotonda = null;
 		DAOTablaRotonda dao = new DAOTablaRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			rotonda = dao.darRotondaPorId(conn, id);
 		}
@@ -1348,7 +1439,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Rotonda> rotondas = new ArrayList<>();
 		DAOTablaRotonda dao = new DAOTablaRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			rotondas = dao.darRotondasPorNombre(conn, nombre);
 		}
@@ -1364,7 +1455,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Rotonda> rotondas = new ArrayList<>();
 		DAOTablaRotonda dao = new DAOTablaRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			rotondas = dao.darRotondas(conn);
 		}
@@ -1383,7 +1474,7 @@ public class RotondAndesMaster
 	public void actualizarRotonda(Rotonda rotonda)
 	{
 		DAOTablaRotonda dao = new DAOTablaRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarRotonda(conn, rotonda);
 			conn.commit();
@@ -1398,7 +1489,7 @@ public class RotondAndesMaster
 	public void eliminarRotonda(Rotonda rotonda)
 	{
 		DAOTablaRotonda dao = new DAOTablaRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarRotonda(conn, rotonda);
 			conn.commit();
@@ -1418,7 +1509,7 @@ public class RotondAndesMaster
 	public void crearProducto(Producto producto)
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarProducto(conn, producto);
 			conn.commit();
@@ -1434,7 +1525,7 @@ public class RotondAndesMaster
 	{
 		Producto producto = null;
 		DAOTablaProducto dao = new DAOTablaProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			producto = dao.darProductoPorId(conn, id);
 		}
@@ -1450,7 +1541,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Producto> productos = new ArrayList<>();
 		DAOTablaProducto dao = new DAOTablaProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			productos = dao.darProductosPorNombre(conn, nombre);
 		}
@@ -1466,7 +1557,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<Producto> productos = new ArrayList<>();
 		DAOTablaProducto dao = new DAOTablaProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			productos = dao.darProductos(conn);
 		}
@@ -1485,7 +1576,7 @@ public class RotondAndesMaster
 	public void actualizarProducto(Producto producto)
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarProducto(conn, producto);
 			conn.commit();
@@ -1500,7 +1591,7 @@ public class RotondAndesMaster
 	public void eliminarProducto(Producto producto)
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarProducto(conn, producto);
 			conn.commit();
@@ -1518,7 +1609,7 @@ public class RotondAndesMaster
 	public void crearAdministradorRotonda(AdministradorRotonda cliente)
 	{
 		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarAdministradorRotonda(conn, cliente);
 			conn.commit();
@@ -1534,7 +1625,7 @@ public class RotondAndesMaster
 	{
 		AdministradorRotonda cliente = null;
 		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRotondaPorCedula(conn, cedula);
 		}
@@ -1550,7 +1641,7 @@ public class RotondAndesMaster
 	{
 		AdministradorRotonda cliente = null;
 		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRotondaPorCorreo(conn, correo);
 		}
@@ -1566,7 +1657,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<AdministradorRotonda> cliente = null;
 		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRotondasPorNombre(conn, nombre);
 		}
@@ -1582,7 +1673,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<AdministradorRotonda> cliente = null;
 		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRotondas(conn);
 		}
@@ -1597,7 +1688,7 @@ public class RotondAndesMaster
 	public void actualizarAdministradorRotonda(AdministradorRotonda cliente)
 	{
 		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarAdministradorRotonda(conn, cliente);
 			conn.commit();
@@ -1612,7 +1703,7 @@ public class RotondAndesMaster
 	public void eliminarAdministradorRotonda(AdministradorRotonda cliente)
 	{
 		DAOTablaAdministradorRotonda dao = new DAOTablaAdministradorRotonda();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarAdministradorRotonda(conn, cliente);
 			conn.commit();
@@ -1630,7 +1721,7 @@ public class RotondAndesMaster
 	public void crearAdministradorRestaurante(AdministradorRestaurante cliente)
 	{
 		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarAdministradorRestaurante(conn, cliente);
 			conn.commit();
@@ -1646,7 +1737,7 @@ public class RotondAndesMaster
 	{
 		AdministradorRestaurante cliente = null;
 		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRestaurantePorCedula(conn, cedula);
 		}
@@ -1662,7 +1753,7 @@ public class RotondAndesMaster
 	{
 		AdministradorRestaurante cliente = null;
 		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRestaurantePorCorreo(conn, correo);
 		}
@@ -1678,7 +1769,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<AdministradorRestaurante> cliente = null;
 		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRestaurantesPorNombre(conn, nombre);
 		}
@@ -1694,7 +1785,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<AdministradorRestaurante> cliente = null;
 		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			cliente = dao.darAdministradorRestaurantes(conn);
 		}
@@ -1709,7 +1800,7 @@ public class RotondAndesMaster
 	public void actualizarAdministradorRestaurante(AdministradorRestaurante cliente)
 	{
 		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarAdministradorRestaurante(conn, cliente);
 			conn.commit();
@@ -1724,7 +1815,7 @@ public class RotondAndesMaster
 	public void eliminarAdministradorRestaurante(AdministradorRestaurante cliente)
 	{
 		DAOTablaAdministradorRestaurante dao = new DAOTablaAdministradorRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarAdministradorRestaurante(conn, cliente);
 			conn.commit();
@@ -1742,7 +1833,7 @@ public class RotondAndesMaster
 	public void crearContabilidadRestaurante(ContabilidadRestaurante re)
 	{
 		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarContabilidadRestaurante(conn, re);
 			conn.commit();
@@ -1757,7 +1848,7 @@ public class RotondAndesMaster
 	{
 		ContabilidadRestaurante contabilidadRestaurante = null;
 		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			contabilidadRestaurante = dao.darContabilidadRestaurantePorId(conn, id);
 		}
@@ -1772,7 +1863,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<ContabilidadRestaurante> reserva = null;
 		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reserva = dao.darContabilidadesPorFecha(conn, fecha);
 		}
@@ -1788,7 +1879,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<ContabilidadRestaurante> reserva = null;
 		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reserva = dao.darContabilidades(conn);
 		}
@@ -1803,7 +1894,7 @@ public class RotondAndesMaster
 	public void actualizarContabilidadRestaurante(ContabilidadRestaurante re)
 	{
 		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarContabilidadRestaurante(conn, re);
 			conn.commit();
@@ -1818,7 +1909,7 @@ public class RotondAndesMaster
 	public void eliminarContabilidadRestaurante(ContabilidadRestaurante re)
 	{
 		DAOTablaContabilidadRestaurante dao = new DAOTablaContabilidadRestaurante();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarContabilidadRestaurante(conn, re);
 			conn.commit();
@@ -1838,7 +1929,7 @@ public class RotondAndesMaster
 	public void crearContabilidadGeneral(ContabilidadGeneral re)
 	{
 		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarContabilidadGeneral(conn, re);
 			conn.commit();
@@ -1854,7 +1945,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<ContabilidadGeneral> reserva = null;
 		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reserva = dao.darContabilidadesPorFecha(conn, fecha);
 		}
@@ -1870,7 +1961,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<ContabilidadGeneral> reserva = null;
 		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			reserva = dao.darContabilidades(conn);
 		}
@@ -1885,7 +1976,7 @@ public class RotondAndesMaster
 	public void actualizarContabilidadGeneral(ContabilidadGeneral re)
 	{
 		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarContabilidadGeneral(conn, re);
 			conn.commit();
@@ -1900,7 +1991,7 @@ public class RotondAndesMaster
 	public void eliminarContabilidadGeneral(ContabilidadGeneral re)
 	{
 		DAOTablaContabilidadGeneral dao = new DAOTablaContabilidadGeneral();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarContabilidadGeneral(conn, re);
 			conn.commit();
@@ -1926,7 +2017,7 @@ public class RotondAndesMaster
 	public void crearPreferenciaCliente(PreferenciaCliente categoria)
 	{
 		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.agregarPreferenciaCliente(conn, categoria);
 			conn.commit();
@@ -1942,7 +2033,7 @@ public class RotondAndesMaster
 	{
 		PreferenciaCliente categoria = null;
 		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			categoria = dao.darPreferenciaClientePorId(conn, id);
 		}
@@ -1958,7 +2049,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<PreferenciaCliente> categorias = new ArrayList<>();
 		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			categorias = dao.darPreferenciasPorNombre(conn, nombre);
 		}
@@ -1974,7 +2065,7 @@ public class RotondAndesMaster
 	{
 		ArrayList<PreferenciaCliente> categorias = new ArrayList<>();
 		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			categorias = dao.darPreferenciaCliente(conn);
 		}
@@ -1989,7 +2080,7 @@ public class RotondAndesMaster
 	public void actualizarPreferenciaCliente(PreferenciaCliente categoria)
 	{
 		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.actualizarPreferencia(conn, categoria);
 			conn.commit();
@@ -2004,7 +2095,7 @@ public class RotondAndesMaster
 	public void eliminarPreferenciaCliente(PreferenciaCliente categoria)
 	{
 		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
-		try(Connection conn = crearConexion())
+		try(Connection conn = darConexion())
 		{
 			dao.eliminarPreferencia(conn, categoria);
 			conn.commit();
