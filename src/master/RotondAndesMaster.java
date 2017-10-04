@@ -19,6 +19,7 @@ import dao.DAOTablaIngrediente;
 import dao.DAOTablaIngredienteProducto;
 import dao.DAOTablaMenu;
 import dao.DAOTablaOrdenRestaurante;
+import dao.DAOTablaPreferenciaCliente;
 import dao.DAOTablaProducto;
 import dao.DAOTablaReserva;
 import dao.DAOTablaRestaurante;
@@ -46,6 +47,7 @@ import vo.TipoProducto;
 import vo.Zona;
 import vo.Menu;
 import vo.OrdenRestaurante;
+import vo.PreferenciaCliente;
 
 public class RotondAndesMaster 
 {
@@ -559,6 +561,83 @@ public class RotondAndesMaster
 		return menus;
 	}
 
+	public ArrayList<Menu> darMenusPorPostre(Long idRestaurante)
+	{
+		ArrayList<Menu> menus = null;
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try(Connection conn = crearConexion())
+		{
+			menus = dao.darMenusPorPostre(conn, idRestaurante);
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		return menus;
+	}
+	
+	public ArrayList<Menu> darMenusPorEntrada(Long idRestaurante)
+	{
+		ArrayList<Menu> menus = null;
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try(Connection conn = crearConexion())
+		{
+			menus = dao.darMenusPorEntrada(conn, idRestaurante);
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		return menus;
+	}
+	
+	public ArrayList<Menu> darMenusPorPlatoFuerte(Long idRestaurante)
+	{
+		ArrayList<Menu> menus = null;
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try(Connection conn = crearConexion())
+		{
+			menus = dao.darMenusPorPlatoFuerte(conn, idRestaurante);
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		return menus;
+	}
+	public ArrayList<Menu> darMenusPorAcompaniamiento(Long idRestaurante)
+	{
+		ArrayList<Menu> menus = null;
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try(Connection conn = crearConexion())
+		{
+			menus = dao.darMenusPorAcompaniamiento(conn, idRestaurante);
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		return menus;
+	}
+	public ArrayList<Menu> darMenusPorBebida(Long idRestaurante)
+	{
+		ArrayList<Menu> menus = null;
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try(Connection conn = crearConexion())
+		{
+			menus = dao.darMenusPorBebida(conn, idRestaurante);
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		return menus;
+	}
 	public ArrayList<Menu> darMenus()
 	{
 		ArrayList<Menu> menus = null;
@@ -1836,7 +1915,107 @@ public class RotondAndesMaster
 
 	// ----------------------------------  Fin métodos ContabilidadGeneral	----------------------------------
 	// ----------------------------------  Inicio métodos Consultas	----------------------------------
-	
-	
+
+
 	// ----------------------------------  Fin métodos Consultas	----------------------------------
+
+	// ----------------------------------  Inicio metodos PreferenciaCliente	----------------------------------
+
+
+
+	public void crearPreferenciaCliente(PreferenciaCliente categoria)
+	{
+		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
+		try(Connection conn = crearConexion())
+		{
+			dao.agregarPreferenciaCliente(conn, categoria);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public PreferenciaCliente darPreferenciaClientePorId(Long id)
+	{
+		PreferenciaCliente categoria = null;
+		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
+		try(Connection conn = crearConexion())
+		{
+			categoria = dao.darPreferenciaClientePorId(conn, id);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return categoria;		
+	}
+
+	public ArrayList<PreferenciaCliente> darPreferenciaClientePorNombre(String nombre)
+	{
+		ArrayList<PreferenciaCliente> categorias = new ArrayList<>();
+		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
+		try(Connection conn = crearConexion())
+		{
+			categorias = dao.darPreferenciasPorNombre(conn, nombre);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return categorias;		
+	}
+
+	public ArrayList<PreferenciaCliente> darPreferenciaClientes()
+	{
+		ArrayList<PreferenciaCliente> categorias = new ArrayList<>();
+		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
+		try(Connection conn = crearConexion())
+		{
+			categorias = dao.darPreferenciaCliente(conn);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return categorias;
+	}
+
+	public void actualizarPreferenciaCliente(PreferenciaCliente categoria)
+	{
+		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
+		try(Connection conn = crearConexion())
+		{
+			dao.actualizarPreferencia(conn, categoria);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+	public void eliminarPreferenciaCliente(PreferenciaCliente categoria)
+	{
+		DAOTablaPreferenciaCliente dao = new DAOTablaPreferenciaCliente();
+		try(Connection conn = crearConexion())
+		{
+			dao.eliminarPreferencia(conn, categoria);
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+	}
+
+
+	// ----------------------------------   Fin metodos PreferenciaCliente	----------------------------------
 }

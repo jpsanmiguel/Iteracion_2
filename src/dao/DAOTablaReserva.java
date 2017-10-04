@@ -117,7 +117,7 @@ public class DAOTablaReserva
 	public ArrayList<Reserva> darReservasPorZona(Connection conn, Long idZona)
 	{
 		ArrayList<Reserva> reservas = new ArrayList<>();
-		String sql = "SELECT * FROM RESERVA WHERE ID_CLIENTE = ?";
+		String sql = "SELECT * FROM RESERVA WHERE ID_ZONA = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setLong(1, idZona);

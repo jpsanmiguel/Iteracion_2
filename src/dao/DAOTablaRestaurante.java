@@ -156,7 +156,7 @@ public class DAOTablaRestaurante
 	
 	public void actualizarRestaurante(Connection conn, Restaurante restaurante)
 	{
-		String sql = "UPDATE RESTAURANTE SET PAGWEB= ?, ID_ZONA = ?, ID_ROTONDA = ? WHERE NOMBRE = ?";
+		String sql = "UPDATE RESTAURANTE SET PAGINA_WEB= ?, ID_ZONA = ?, ID_ROTONDA = ? WHERE NOMBRE = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setString(1, restaurante.getPagWeb());

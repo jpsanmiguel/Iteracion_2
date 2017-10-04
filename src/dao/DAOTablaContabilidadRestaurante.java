@@ -190,7 +190,7 @@ public class DAOTablaContabilidadRestaurante
 			preStat.setLong(1, restaurante.getIdVenta());
 			preStat.executeQuery();
 			conn.commit();
-			conn.commit();
+		
 		}
 		catch(SQLException e)
 		{

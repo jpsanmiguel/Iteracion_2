@@ -19,7 +19,7 @@ public class DAOTablaProducto {
 
 	public void agregarProducto(Connection conn, Producto producto)
 	{
-		String sql = "INSERT INTO PRODUCTO VALUES (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO PRODUCTO VALUES (?,?,?,?,?,?,?,?,?,?)";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setLong(1, producto.getIdProducto());
@@ -30,6 +30,8 @@ public class DAOTablaProducto {
 			preStat.setInt(6, producto.getTiempo());
 			preStat.setDouble(7, producto.getCosto());
 			preStat.setDouble(8, producto.getPrecio());
+			preStat.setInt(9, producto.getCantidad());
+			preStat.setString(10, producto.getNombreRestaurante());
 			preStat.executeQuery();
 			conn.commit();
 		}
@@ -66,7 +68,9 @@ public class DAOTablaProducto {
 				int tiempo = rs.getInt("TIEMPO");
 				double costo = rs.getDouble("COSTO");
 				double precio = rs.getDouble("PRECIO");
-				producto = new Producto(idProducto, nombre, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio);
+				int cantidad = rs.getInt("CANTIDAD");
+				String nombreR = rs.getString("NOMBRE_RESTAURANTE");
+				producto = new Producto(idProducto, nombre, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio,cantidad,nombreR);
 			}
 			conn.commit();
 		}
@@ -105,7 +109,9 @@ public class DAOTablaProducto {
 				int tiempo = rs.getInt("TIEMPO");
 				double costo = rs.getDouble("COSTO");
 				double precio = rs.getDouble("PRECIO");
-				productos.add( new Producto(id, nombres, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio));
+				int cantidad = rs.getInt("CANTIDAD");
+				String nombreR = rs.getString("NOMBRE_RESTAURANTE");
+				productos.add( new Producto(id, nombres, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio,cantidad, nombreR));
 			}
 			conn.commit();
 		} catch (SQLException e) {
@@ -134,7 +140,9 @@ public class DAOTablaProducto {
 				int tiempo = rs.getInt("TIEMPO");
 				double costo = rs.getDouble("COSTO");
 				double precio = rs.getDouble("PRECIO");
-				productos.add(new Producto(id, nombre, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio));
+				int cantidad = rs.getInt("CANTIDAD");
+				String nombreR = rs.getString("NOMBRE_RESTAURANTE");
+				productos.add(new Producto(id, nombre, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio, cantidad, nombreR));
 			}
 			conn.commit();
 		}
@@ -147,7 +155,7 @@ public class DAOTablaProducto {
 
 	public void actualizarProducto(Connection conn, Producto producto)
 	{
-		String sql = "UPDATE PRODUCTO SET NOMBRE = ?, ID_CATEGORIA = ?, DESCRIPCION_ESP = ?, DESCRIPCION_ING = ?, TIEMPO = ?, COSTO = ?, PRECIO = ? WHERE ID = ?";
+		String sql = "UPDATE PRODUCTO SET NOMBRE = ?, ID_CATEGORIA = ?, DESCRIPCION_ESP = ?, DESCRIPCION_ING = ?, TIEMPO = ?, COSTO = ?, PRECIO = ?, CANTIDAD = ?, NOMBRE_RESTAURANTE =? WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setString(1, producto.getNombre());
@@ -157,7 +165,9 @@ public class DAOTablaProducto {
 			preStat.setInt(5, producto.getTiempo());
 			preStat.setDouble(6, producto.getCosto());
 			preStat.setDouble(7, producto.getPrecio());		
-			preStat.setLong(8, producto.getIdProducto());				
+			preStat.setInt(8, producto.getCantidad());
+			preStat.setString(9, producto.getNombreRestaurante());
+			preStat.setLong(10, producto.getIdProducto());				
 			preStat.executeQuery();
 			conn.commit();
 		}

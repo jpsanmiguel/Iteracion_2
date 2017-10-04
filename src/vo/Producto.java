@@ -35,6 +35,12 @@ public class Producto {
 
 	@JsonProperty(value="precio")
 	private double precio;
+	
+	@JsonProperty(value="cantidad")
+	private int cantidad;
+	
+	@JsonProperty(value="nombreRestaurante")
+	private String nombreRestaurante;
 
 	
 	
@@ -45,7 +51,9 @@ public class Producto {
 					@JsonProperty(value="descripcionIng")String descripcionIng, 
 					@JsonProperty(value="tiempo")int tiempo, 
 					@JsonProperty(value="costo")double costo, 
-					@JsonProperty(value="precio")double precio) {
+					@JsonProperty(value="precio")double precio,
+					@JsonProperty(value="cantidad") int cantidad,
+					@JsonProperty(value="nombreRestaurante") String nombreRestaurante) {
 		this.idProducto = idProducto;
 		this.nombre = nombre;
 		this.idCategoria = idCategoria;
@@ -54,6 +62,8 @@ public class Producto {
 		this.tiempo = tiempo;
 		this.costo = costo;
 		this.precio = precio;
+		this.cantidad=cantidad;
+		this.nombreRestaurante=nombreRestaurante;
 	}
 
 	public Long getIdProducto() {
@@ -119,9 +129,30 @@ public class Producto {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	
-	
-	
+
+	public Long getIdCategoria() {
+		return idCategoria;
+	}
+
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public String getNombreRestaurante() {
+		return nombreRestaurante;
+	}
+
+	public void setNombreRestaurante(String nombreRestaurante) {
+		this.nombreRestaurante = nombreRestaurante;
+	}
 	
 
 }

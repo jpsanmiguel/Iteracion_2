@@ -25,6 +25,7 @@ public class DAOTablaOrdenRestaurante
 			preStat.setDate(2, ordenRestaurante.getFecha());
 			preStat.setLong(3, ordenRestaurante.getIdMenu());
 			preStat.setLong(4, ordenRestaurante.getIdRotonda());
+			preStat.setLong(5, ordenRestaurante.getIdCliente());
 			preStat.executeQuery();
 			conn.commit();
 		}
@@ -57,7 +58,8 @@ public class DAOTablaOrdenRestaurante
 				Date fecha = rs.getDate("FECHA");
 				Long idMenu = rs.getLong("ID_MENU");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				ordenRestaurante = new OrdenRestaurante(idOrdenRestaurante, fecha, idMenu, idRotonda);
+				Long idCliente = rs.getLong("ID_CLIENTE");
+				ordenRestaurante = new OrdenRestaurante(idOrdenRestaurante, fecha, idMenu, idRotonda, idCliente);
 			}				
 			conn.commit();
 		}
@@ -80,7 +82,7 @@ public class DAOTablaOrdenRestaurante
 	public ArrayList<OrdenRestaurante> darOrdenRestaurantesPorMenu(Connection conn, Long idMenu)
 	{
 		ArrayList<OrdenRestaurante> ordenRestaurantes = new ArrayList<>();
-		String sql = "SELECT * FROM ORDEN_RESTAURANTE WHERE ID_RESTAURANTE = ?";
+		String sql = "SELECT * FROM ORDEN_RESTAURANTE WHERE ID_MENU = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setLong(1, idMenu);
@@ -92,7 +94,8 @@ public class DAOTablaOrdenRestaurante
 				Date fecha = rs.getDate("FECHA");
 				Long idMenu1 = rs.getLong("ID_MENU");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				ordenRestaurantes.add(new OrdenRestaurante(id, fecha, idMenu1, idRotonda));
+				Long idCliente = rs.getLong("ID_CLIENTE");
+				ordenRestaurantes.add(new OrdenRestaurante(id, fecha, idMenu1, idRotonda, idCliente));
 			}	
 			conn.commit();
 		}
@@ -125,7 +128,8 @@ public class DAOTablaOrdenRestaurante
 				Date fecha = rs.getDate("FECHA");
 				Long idMenu = rs.getLong("ID_MENU");
 				Long idRotonda = rs.getLong("ID_ROTONDA");
-				ordenRestaurantes.add(new OrdenRestaurante(id, fecha, idMenu, idRotonda));
+				Long idCliente = rs.getLong("ID_CLIENTE");
+				ordenRestaurantes.add(new OrdenRestaurante(id, fecha, idMenu, idRotonda, idCliente));
 			}	
 			conn.commit();
 		}
@@ -146,13 +150,14 @@ public class DAOTablaOrdenRestaurante
 	
 	public void actualizarOrdenRestaurante(Connection conn, OrdenRestaurante ordenRestaurante)
 	{
-		String sql = "UPDATE ORDEN_RESTAURANTE SET FECHA = ?, ID_MENU = ?, ID_ROTONDA = ? WHERE ID = ?";
+		String sql = "UPDATE ORDEN_RESTAURANTE SET FECHA = ?, ID_MENU = ?, ID_ROTONDA = ?, ID_CLIENTE = ?  WHERE ID = ?";
 		try(PreparedStatement preStat = conn.prepareStatement(sql))
 		{
 			preStat.setDate(1, ordenRestaurante.getFecha());
 			preStat.setLong(2, ordenRestaurante.getIdMenu());
 			preStat.setLong(3, ordenRestaurante.getIdRotonda());
-			preStat.setLong(4, ordenRestaurante.getIdOrdenRestaurante());
+			preStat.setLong(4, ordenRestaurante.getIdCliente());
+			preStat.setLong(5, ordenRestaurante.getIdOrdenRestaurante());
 			preStat.executeQuery();
 			conn.commit();
 			conn.commit();

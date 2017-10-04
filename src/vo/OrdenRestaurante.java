@@ -17,11 +17,15 @@ public class OrdenRestaurante {
 
 	@JsonProperty(value="idRotonda")
 	private Long idRotonda;
+	
+	@JsonProperty(value="idCliente")
+	private Long idCliente;
 
 	public OrdenRestaurante(@JsonProperty(value="idOrdenRestaurante")Long idOrdenRestaurante, 
 							@JsonProperty(value="fecha")Date fecha, 
 							@JsonProperty(value="idMenu")Long idMenu, 
-							@JsonProperty(value="idRotonda")Long idRotonda) {
+							@JsonProperty(value="idRotonda")Long idRotonda,
+							@JsonProperty(value="idCliente") Long idCliente) {
 		this.idOrdenRestaurante = idOrdenRestaurante;
 		this.fecha = fecha;
 		this.idMenu = idMenu;
@@ -58,7 +62,16 @@ public class OrdenRestaurante {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}	
+	
 	
 	
 }
