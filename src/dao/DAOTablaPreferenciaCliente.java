@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vo.Categoria;
+
 import vo.PreferenciaCliente;
 
 public class DAOTablaPreferenciaCliente {

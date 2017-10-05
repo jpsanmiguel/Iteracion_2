@@ -91,19 +91,19 @@ public class RESTZona
 		return pro;
 	}
 
-	private ArrayList<Restaurante> darRestaurantesZona(ArrayList<Restaurante> restaurantes, Long id)
-	{
-		ArrayList<Restaurante> res = new ArrayList<Restaurante>();
-		for (int i=0;i<restaurantes.size();i++)
-		{
-			Restaurante actual = restaurantes.get(i);
-			if(actual.getIdZona()==id)
-			{
-				res.add(actual);
-			}
-		}
-		return res;
-	}
+//	private ArrayList<Restaurante> darRestaurantesZona(ArrayList<Restaurante> restaurantes, Long id)
+//	{
+//		ArrayList<Restaurante> res = new ArrayList<Restaurante>();
+//		for (int i=0;i<restaurantes.size();i++)
+//		{
+//			Restaurante actual = restaurantes.get(i);
+//			if(actual.getIdZona()==id)
+//			{
+//				res.add(actual);
+//			}
+//		}
+//		return res;
+//	}
 
 	@GET
 	@Path( "{nombre}" )
