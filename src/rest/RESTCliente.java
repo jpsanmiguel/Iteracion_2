@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
 import vo.Cliente;
+import vo.OrdenRestaurante;
 import vo.PreferenciaCliente;
 
 
@@ -76,6 +77,23 @@ public class RESTCliente
 		}
 		return Response.status(200).entity(cliente).build();
 	}
+//	@GET
+//	@Path( "{id: \\d+}" )
+//	@Produces( { MediaType.APPLICATION_JSON } )
+//	public Response darClienteId( @PathParam( "id" ) Long id )
+//	{
+//		RotondAndesMaster tm = new RotondAndesMaster( getPath( ) );
+//		try
+//		{
+//			Cliente cliente = tm.darClientePorCedula(id);
+//			return Response.status( 200 ).entity( cliente ).build( );			
+//		}
+//		catch( Exception e )
+//		{
+//			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+//		}
+//	}
+	
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
@@ -85,7 +103,12 @@ public class RESTCliente
 		try
 		{
 			Cliente cliente = tm.darClientePorCedula(id);
-			return Response.status( 200 ).entity( cliente ).build( );			
+			ArrayList<OrdenRestaurante> orden =tm.darOrdenRestaurantePorIdCliente(id);
+			PreferenciaCliente p = tm.darPreferenciaClientePorId(id);
+			
+			ArrayList c = new ArrayList();
+			c.add(cliente); c.addAll(orden); c.add(p);
+			return Response.status( 200 ).entity( c ).build( );			
 		}
 		catch( Exception e )
 		{

@@ -80,43 +80,42 @@ public class DAOTablaRestaurante
 		}
 		return restaurante;
 	}
-//	
-//	public ArrayList<Restaurante> darRestaurantesPorNombre(Connection conn, String nombre)
-//	{
-//		ArrayList<Restaurante> restaurantes = new ArrayList<>();
-//		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE = ?";
-//		try(PreparedStatement preStat = conn.prepareStatement(sql))
-//		{
-//			preStat.setString(1, nombre);
-//			ResultSet rs = preStat.executeQuery();
-//			
-//			while(rs.next())
-//			{
-//				Long idRestaurante = rs.getLong("ID");
-//				String nombre1 = rs.getString("NOMBRE");
-//				String tipoComida = rs.getString("TIPO_COMIDA");
-//				String pagWeb = rs.getString("PAGINA_WEB");
-//				String encargado = rs.getString("ENCARGADO");
-//				Long idZona = rs.getLong("ID_ZONA");
-//				Long idRotonda = rs.getLong("ID_ROTONDA");
-//				restaurantes.add(new Restaurante(idRestaurante, nombre1, tipoComida, pagWeb, encargado, idZona, idRotonda));
-//			}	
-//			conn.commit();
-//		}
-//		catch(SQLException e)
-//		{
-//			try 
-//			{
-//				conn.rollback();
-//			} catch (SQLException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//
-//			e.printStackTrace();
-//		}
-//		return restaurantes;
-//	}
+	
+	public ArrayList<Restaurante> darRestaurantesPorZona(Connection conn, Long nombre)
+	{
+		ArrayList<Restaurante> restaurantes = new ArrayList<>();
+		String sql = "SELECT * FROM RESTAURANTE WHERE ID_ZONA = ?";
+		try(PreparedStatement preStat = conn.prepareStatement(sql))
+		{
+			preStat.setLong(1, nombre);
+			ResultSet rs = preStat.executeQuery();
+			
+			while(rs.next())
+			{
+				String nombre1 = rs.getString("NOMBRE");
+				String tipoComida = rs.getString("TIPO_COMIDA");
+				String pagWeb = rs.getString("PAGINA_WEB");
+				String encargado = rs.getString("ENCARGADO");
+				Long idZona = rs.getLong("ID_ZONA");
+				Long idRotonda = rs.getLong("ID_ROTONDA");
+				restaurantes.add(new Restaurante(nombre1, tipoComida, pagWeb, encargado, idZona, idRotonda));
+			}	
+			conn.commit();
+		}
+		catch(SQLException e)
+		{
+			try 
+			{
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		}
+		return restaurantes;
+	}
 	
 	public ArrayList<Restaurante> darRestaurantes(Connection conn)
 	{

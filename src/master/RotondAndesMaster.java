@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.util.List;
 import java.util.Properties;
 
 import dao.DAOTablaAdministradorRestaurante;
@@ -1019,6 +1019,7 @@ public class RotondAndesMaster
 		return restaurante;
 	}
 
+	
 	//	public ArrayList<Restaurante> darRestaurantesPorNombre(String nombre)
 	//	{
 	//		ArrayList<Restaurante> restaurantes = new ArrayList<>();
@@ -1042,6 +1043,25 @@ public class RotondAndesMaster
 		try(Connection conn = darConexion())
 		{
 			restaurantes = dao.darRestaurantes(conn);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return restaurantes;
+	}
+	public ArrayList<Restaurante> darRestaurantesPorZona(Long id)
+	{
+		ArrayList<Restaurante> restaurantes = new ArrayList<>();
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		try(Connection conn = darConexion())
+		{
+			restaurantes = dao.darRestaurantesPorZona(conn, id);
 		}
 		catch(SQLException e)
 		{
@@ -1552,7 +1572,54 @@ public class RotondAndesMaster
 		}
 		return productos;
 	}
+	
+	public ArrayList<Producto> darProductosCategoria(Long id) {
 
+		ArrayList<Producto> productos = new ArrayList<>();
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try(Connection conn = darConexion())
+		{
+			productos = dao.darProductosPorCategoria(conn, id);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return productos;
+	}
+	public ArrayList<Producto> darProductosRangoPrecio(double min, double max) {
+		ArrayList<Producto> productos = new ArrayList<>();
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try(Connection conn = darConexion())
+		{
+			productos = dao.darProductosPorRangoPrecio(conn, min,max);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return productos;
+	}
+
+
+
+	public ArrayList<Producto> darProductosRestaurante(String name) 
+	{
+		ArrayList<Producto> productos = new ArrayList<>();
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try(Connection conn = darConexion())
+		{
+			productos = dao.darProductosPorNombreRestaurante(conn, name);
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+		}
+		return productos;
+	}
 	public ArrayList<Producto> darProductos()
 	{
 		ArrayList<Producto> productos = new ArrayList<>();
@@ -2106,6 +2173,10 @@ public class RotondAndesMaster
 			e.printStackTrace();
 		}
 	}
+
+	
+	
+	
 
 
 	// ----------------------------------   Fin metodos PreferenciaCliente	----------------------------------

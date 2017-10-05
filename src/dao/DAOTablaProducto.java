@@ -121,6 +121,104 @@ public class DAOTablaProducto {
 
 		return productos;
 	}
+	
+
+	public ArrayList<Producto> darProductosPorNombreRestaurante(Connection conn, String name) {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+
+		String sql = "SELECT * FROM PRODUCTO WHERE NOMBRE_RESTAURANTE = ?";
+
+		try(PreparedStatement preStat = conn.prepareStatement(sql))
+		{
+			preStat.setString(1, name);
+			ResultSet rs = preStat.executeQuery();
+
+			while (rs.next()) {
+				String nombres = rs.getString("NOMBRE");
+				Long id = rs.getLong("ID");
+				Long idCategoria = rs.getLong("ID_CATEGORIA");
+				String descripcionEsp = rs.getString("DESCRIPCION_ESP");
+				String descripcionIng = rs.getString("DESCRIPCION_ING");
+				int tiempo = rs.getInt("TIEMPO");
+				double costo = rs.getDouble("COSTO");
+				double precio = rs.getDouble("PRECIO");
+				int cantidad = rs.getInt("CANTIDAD");
+				String nombreR = rs.getString("NOMBRE_RESTAURANTE");
+				productos.add( new Producto(id, nombres, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio,cantidad, nombreR));
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return productos;
+	}
+	
+
+	public ArrayList<Producto> darProductosPorCategoria(Connection conn, Long id) {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+
+		String sql = "SELECT * FROM PRODUCTO WHERE ID_CATEGORIA = ?";
+
+		try(PreparedStatement preStat = conn.prepareStatement(sql))
+		{
+			preStat.setLong(1, id);
+			ResultSet rs = preStat.executeQuery();
+
+			while (rs.next()) {
+				String nombres = rs.getString("NOMBRE");
+				Long id1 = rs.getLong("ID");
+				Long idCategoria = rs.getLong("ID_CATEGORIA");
+				String descripcionEsp = rs.getString("DESCRIPCION_ESP");
+				String descripcionIng = rs.getString("DESCRIPCION_ING");
+				int tiempo = rs.getInt("TIEMPO");
+				double costo = rs.getDouble("COSTO");
+				double precio = rs.getDouble("PRECIO");
+				int cantidad = rs.getInt("CANTIDAD");
+				String nombreR = rs.getString("NOMBRE_RESTAURANTE");
+				productos.add( new Producto(id1, nombres, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio,cantidad, nombreR));
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return productos;
+	}
+	public ArrayList<Producto> darProductosPorRangoPrecio(Connection conn, double min, double max) {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+
+		String sql = "SELECT * FROM PRODUCTO WHERE PRECIO > ? AND PRECIO < ?";
+
+		try(PreparedStatement preStat = conn.prepareStatement(sql))
+		{
+			preStat.setDouble(1, min);
+			preStat.setDouble(2, max);
+			ResultSet rs = preStat.executeQuery();
+
+			while (rs.next()) {
+				String nombres = rs.getString("NOMBRE");
+				Long id1 = rs.getLong("ID");
+				Long idCategoria = rs.getLong("ID_CATEGORIA");
+				String descripcionEsp = rs.getString("DESCRIPCION_ESP");
+				String descripcionIng = rs.getString("DESCRIPCION_ING");
+				int tiempo = rs.getInt("TIEMPO");
+				double costo = rs.getDouble("COSTO");
+				double precio = rs.getDouble("PRECIO");
+				int cantidad = rs.getInt("CANTIDAD");
+				String nombreR = rs.getString("NOMBRE_RESTAURANTE");
+				productos.add( new Producto(id1, nombres, idCategoria, descripcionEsp, descripcionIng, tiempo, costo, precio,cantidad, nombreR));
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return productos;
+	}
 
 	public ArrayList<Producto> darProductos(Connection conn) throws SQLException, Exception {
 		ArrayList<Producto> productos = new ArrayList<Producto>();
@@ -191,5 +289,15 @@ public class DAOTablaProducto {
 			e.printStackTrace();
 		}
 	}
+
+
+
+	
+
+
+
+
+
+
 
 }

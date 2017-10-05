@@ -262,8 +262,44 @@ PUT http://localhost:8080/RotondAndes/rest/ordenRestaurantes/id
     
 }
 
+Req de consulta
+
+RFC1
+Obtener la información de los productos.
+Para obtener la información de todos los productos.
+GET http://localhost:8080/RotondAndes/rest/productos
+
+Para obtener la información de todos los productos de un restaurante.
+GET http://localhost:8080/RotondAndes/rest/productos/restauranteproductos/{nombre_restaurante}
+
+Donde {nombre_restaurante}, está registrado como el nombre de un restaurante.
+
+Para obtener la información de todos los productos de cierta categoría.
+GET http://localhost:8080/RotondAndes/rest/productos/categoriaproductos/{idCategoria}
+
+Para obtener información de todos los productos en un rango de precio.
+GET http://localhost:8080/RotondAndes/rest/productos/precios/{precioMin}/max/{precioMax}
 
 
+Donde {idCategoria}, está registrada como una categoría.
+
+RFC2
+Obtener la información de una zona.
+GET http://localhost:8080/RotondAndes/rest/zonas/{idZona}
+
+Donde {idZona}, corresponde a una zona ya existente.
+
+RFC3
+Obtener información de un user cliente.
+
+GET http://localhost:8080/RotondAndes/rest/clientes/{idCliente}
+
+Donde {idCliente}, es la cédula de un cliente registrado.
+
+RFC4
+Obtener el producto que está presente en más menús.
+
+GET http://localhost:8080/RotondAndes/rest/productos/masofrecido
 
 
 

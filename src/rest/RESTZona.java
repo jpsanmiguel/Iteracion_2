@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import master.RotondAndesMaster;
+import vo.Producto;
+import vo.Restaurante;
 import vo.Zona;
 
 
@@ -56,7 +58,15 @@ public class RESTZona
 		try
 		{
 			Zona zona = tm.darZonaPorId(id);
-			return Response.status( 200 ).entity( zona ).build( );			
+			ArrayList<Restaurante> restaurantes = tm.darRestaurantesPorZona(id);
+	
+			ArrayList<Producto> productos = tm.darProductos();
+	ArrayList<Producto> productosZona = darProductosZona(restaurantes, productos);
+			ArrayList c= new ArrayList<>();
+			c.add(zona); 
+			c.addAll(restaurantes);  
+			c.addAll(productosZona);
+			return Response.status( 200 ).entity( c ).build( );			
 		}
 		catch( Exception e )
 		{
@@ -64,6 +74,37 @@ public class RESTZona
 		}
 	}
 	
+	private ArrayList<Producto> darProductosZona(ArrayList<Restaurante> restaurantes, ArrayList<Producto> productos) 
+	{
+		// TODO Auto-generated method stub
+		ArrayList<Producto> pro = new ArrayList<Producto>();
+		for(int res =0; res<restaurantes.size();res++)
+		{
+			for (int prod =0; prod<productos.size();prod++)
+			{
+				if(productos.get(prod).getNombreRestaurante().equals(restaurantes.get(res).getNombre()))
+				{
+					pro.add(productos.get(prod));
+				}
+			}
+		}
+		return pro;
+	}
+
+	private ArrayList<Restaurante> darRestaurantesZona(ArrayList<Restaurante> restaurantes, Long id)
+	{
+		ArrayList<Restaurante> res = new ArrayList<Restaurante>();
+		for (int i=0;i<restaurantes.size();i++)
+		{
+			Restaurante actual = restaurantes.get(i);
+			if(actual.getIdZona()==id)
+			{
+				res.add(actual);
+			}
+		}
+		return res;
+	}
+
 	@GET
 	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
